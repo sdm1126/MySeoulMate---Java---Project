@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_album"
+        android:enabled="true"
+        android:icon="@drawable/ic_album"
+        android:title="앨범" />
+
+    <item
+        android:id="@+id/item_like"
+        android:enabled="true"
+        android:icon="@drawable/ic_like"
+        android:title="좋아요" />
+
+</menu>
