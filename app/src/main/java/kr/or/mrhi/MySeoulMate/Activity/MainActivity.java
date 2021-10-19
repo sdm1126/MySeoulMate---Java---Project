@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     private GoogleSignInOptions googleSignInOptions;
     private GoogleApiClient googleApiClient; // 구글 API 클라이언트 객체
     private FirebaseAuth firebaseAuth; // 파이어베이스 인증 객체
-    private static final int REQUEST_CODE_GOOGLE = 1001; // 구글 로그인 결과 코드
+    private final int REQUEST_CODE_GOOGLE = 1001; // 구글 로그인 결과 코드
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

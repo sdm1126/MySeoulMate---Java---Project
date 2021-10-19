@@ -13,7 +13,6 @@ import java.util.ArrayList;
 public class MySeoulMateDBHelper extends SQLiteOpenHelper {
     public static MySeoulMateDBHelper mySeoulMateDBHelper;
     private Context context;
-    private Attraction attraction;
 
     public MySeoulMateDBHelper(Context context) {
         super(context, "MySeoulMate", null, 1);
