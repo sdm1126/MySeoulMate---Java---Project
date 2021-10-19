@@ -13,7 +13,6 @@ import java.util.ArrayList;
 public class MySeoulMateDBHelper extends SQLiteOpenHelper {
     public static MySeoulMateDBHelper mySeoulMateDBHelper;
     private Context context;
-    private Attraction attraction;
 
     public MySeoulMateDBHelper(Context context) {
         super(context, "MySeoulMate", null, 1);
@@ -148,7 +147,7 @@ public class MySeoulMateDBHelper extends SQLiteOpenHelper {
         }
     }
 
-    // 연결 끊기 시 좋아요 테이블 삭제 
+    // 연결 끊기 시 좋아요 테이블 삭제
     public void dropLike(String userId) {
         SQLiteDatabase sqLiteDatabase = null;
         try {
@@ -185,6 +184,111 @@ public class MySeoulMateDBHelper extends SQLiteOpenHelper {
                 sqLiteDatabase.close();
             }
         }
+        return arrayList;
+    }
+
+    public void createAlbum(User user) {
+        SQLiteDatabase sqLiteDatabase = null;
+        try {
+            sqLiteDatabase = this.getWritableDatabase();
+            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + user.getUserId() + "AlbumTBL(title TEXT, content TEXT, currentDate TEXT NOT NULL PRIMARY KEY, image TEXT);");
+            Log.e("확인", "MySeoulMateDBHelper_createAlbum() 성공");
+        } catch (Exception e) {
+            Log.e("확인", "MySeoulMateDBHelper_createAlbum() 실패" + e.toString());
+        } finally {
+            if(sqLiteDatabase != null) {
+                sqLiteDatabase.close();
+            }
+        }
+    }
+
+    public void insertAlbum(String userId, Album album) {
+        SQLiteDatabase sqLiteDatabase = null;
+        try {
+            sqLiteDatabase = this.getWritableDatabase();
+            sqLiteDatabase.execSQL("INSERT INTO " + userId + "AlbumTBL (title, content, currentDate, image) VALUES ('"
+                    + album.getTitle() + "','"
+                    + album.getContent() + "','"
+                    + album.getCurrentDate() + "','"
+                    + album.getImage() + "');");
+            Log.e("확인", "MySeoulMateDBHelper_insertAlbum() 성공");
+        } catch (Exception e) {
+            Log.e("확인", "MySeoulMateDBHelper_insertAlbum() 실패 " + e.toString());
+        } finally {
+            if(sqLiteDatabase != null) {
+                sqLiteDatabase.close();
+            }
+        }
+    }
+
+    public void deleteAlbum(String userId, String previousDate) {
+        SQLiteDatabase sqLiteDatabase = null;
+        try {
+            sqLiteDatabase = this.getWritableDatabase();
+            sqLiteDatabase.execSQL("DELETE FROM " + userId + "AlbumTBL WHERE currentDate = '" + previousDate + "';");
+            Log.e("확인", "MySeoulMateDBHelper_deleteAlbum() 성공");
+        } catch (Exception e) {
+            Log.e("확인", "MySeoulMateDBHelper_deleteAlbum() 실패 " + e.toString());
+        } finally {
+            if(sqLiteDatabase != null) {
+                sqLiteDatabase.close();
+            }
+        }
+    }
+
+    public void dropAlbum(String userId) {
+        SQLiteDatabase sqLiteDatabase = null;
+        try {
+            sqLiteDatabase = this.getWritableDatabase();
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + userId + "AlbumTBL");
+            Log.e("확인", "MySeoulMateDBHelper_dropAlbum() 성공");
+        } catch (Exception e) {
+            Log.e("확인", "MySeoulMateDBHelper_dropAlbum() 실패 " + e.toString());
+        } finally {
+            if(sqLiteDatabase != null) {
+                sqLiteDatabase.close();
+            }
+        }
+    }
+
+    public void updateAlbum(String userId, String title, String content, String currentDate, String previousDate) {
+        SQLiteDatabase sqLiteDatabase = null;
+        try {
+            sqLiteDatabase = this.getWritableDatabase();
+            sqLiteDatabase.execSQL("UPDATE " + userId + "AlbumTBL SET title = '" + title + "', content = '" + content + "', currentDate = '" + currentDate + "' WHERE currentDate = '" + previousDate + "';");
+            Log.e("확인", "MySeoulMateDBHelper_updateAlbum() 성공");
+        } catch (Exception e) {
+            Log.e("확인", "MySeoulMateDBHelper_updateAlbum() 실패" + e.toString());
+        } finally {
+            if(sqLiteDatabase != null) {
+                sqLiteDatabase.close();
+            }
+        }
+    }
+
+    public ArrayList<Album> loadAlbum(String userId) {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT title, content, currentDate, image FROM " + userId + "AlbumTBL ORDER BY currentDate DESC", null);
+
+        ArrayList<Album> arrayList = new ArrayList<>();
+
+        if(cursor.getCount() != 0) {
+            while(cursor.moveToNext()) {
+                String title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
+                String content = cursor.getString(cursor.getColumnIndexOrThrow("content"));
+                String currentDate = cursor.getString(cursor.getColumnIndexOrThrow("currentDate"));
+                String image = cursor.getString(cursor.getColumnIndexOrThrow("image"));
+
+                Album album = new Album();
+                album.setTitle(title);
+                album.setContent(content);
+                album.setCurrentDate(currentDate);
+                album.setImage(image);
+
+                arrayList.add(album);
+            }
+        }
+
         return arrayList;
     }
 }

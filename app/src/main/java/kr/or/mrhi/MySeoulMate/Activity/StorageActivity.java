@@ -8,22 +8,15 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 import kr.or.mrhi.MySeoulMate.R;
 import kr.or.mrhi.MySeoulMate.StorageFragment.AlbumFragment;
 import kr.or.mrhi.MySeoulMate.StorageFragment.LikeFragment;
 
-public class StorageActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
-
-    // widget
-    private FrameLayout fl_storage;
+public class StorageActivity extends AppCompatActivity {
     private BottomNavigationView bnv_storage;
-
-    // fragment
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private LikeFragment likeFragment;
@@ -34,39 +27,51 @@ public class StorageActivity extends AppCompatActivity implements NavigationBarV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storage);
 
-        fl_storage = findViewById(R.id.fl_storage);
+
         bnv_storage = findViewById(R.id.bnv_storage);
+        bnv_storage.setOnItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.item_like:
+                        setFrag(0);
+                        break;
+                    case R.id.item_album:
+                        setFrag(1);
+                        break;
+                }
+                return true;
+            }
+        });
 
-        bnv_storage.setOnItemSelectedListener(this);
+        // Fragment별 객체 생성(각 Fragment 클래스 안에 Fragment View를 생성하는 구문 들어가있음)
+        likeFragment = new LikeFragment();
+        albumFragment = new AlbumFragment();
 
-        albumFragment = AlbumFragment.newInstance();
-        likeFragment = LikeFragment.newInstance();
+        // 화면 초기 세팅
+        setFrag(0);
 
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fl_storage, albumFragment).commit();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    // Fragment 교체 실행문
+    // bottom menu는 ArrayList식, n은 index에 해당
+    private void setFrag(int n) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-
-        switch(item.getItemId()) {
-            case R.id.item_album:
-                fragmentTransaction.replace(R.id.fl_storage, albumFragment).commit();
-                return true;
-            case R.id.item_like:
-                fragmentTransaction.replace(R.id.fl_storage, likeFragment).commit();
-                return true;
+        switch (n) {
+            case 0:
+                fragmentTransaction.replace(R.id.fl_storage, likeFragment);
+                break;
+            case 1:
+                fragmentTransaction.replace(R.id.fl_storage, albumFragment);
+                break;
         }
-        return false;
+        fragmentTransaction.commit();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         Intent intent = new Intent(StorageActivity.this, AreaActivity.class);
         startActivity(intent);
         finish();

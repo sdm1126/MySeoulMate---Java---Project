@@ -1,7 +1,154 @@
 package kr.or.mrhi.MySeoulMate.Adapter;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AlbumAdapter {
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+
+import kr.or.mrhi.MySeoulMate.MySeoulMateDBHelper;
+import kr.or.mrhi.MySeoulMate.R;
+import kr.or.mrhi.MySeoulMate.Album;
+
+public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
+
+    private ArrayList<Album> albumlistItems;
+    private Context context;
+    private MySeoulMateDBHelper mySeoulMateDBHelper;
+    private int currentPosition;
+
+
+    public AlbumAdapter(ArrayList<Album> listItems, Context context) {
+        this.albumlistItems = listItems;
+        this.context = context;
+        mySeoulMateDBHelper = new MySeoulMateDBHelper(context);
+
+    }
+
+    @NonNull
+    @Override
+    public AlbumAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        View holder = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_album, parent, false);
+
+        return new ViewHolder(holder);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull AlbumAdapter.ViewHolder holder, int position) {
+        holder.tv_title_item_album.setText(albumlistItems.get(position).getTitle());
+        holder.tv_content_item_album.setText(albumlistItems.get(position).getContent());
+        holder.tv_currentDate_item_album.setText(albumlistItems.get(position).getCurrentDate());
+    }
+
+    @Override
+    public int getItemCount() {
+        return albumlistItems.size();
+    }
+
+    public void dialog() {
+
+        Album listItem = albumlistItems.get(currentPosition);
+
+        String[] strChoiceItems = {"수정하기", "삭제하기"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("원하는 작업을 선택하세요");
+        builder.setItems(strChoiceItems, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int position) {
+                // 수정하기
+                if (position == 0) {
+                    Dialog dialog = new Dialog(context, android.R.style.Theme_Material_Light_Dialog);
+                    dialog.setContentView(R.layout.dialog_album);
+
+                    EditText et_title_dialog_album = dialog.findViewById(R.id.et_title_dialog_album);
+                    EditText et_content_dialog_album = dialog.findViewById(R.id.et_content_dialog_album);
+                    Button btn_photo_dialog_album = dialog.findViewById(R.id.btn_photo_dialog_album);
+
+                    et_title_dialog_album.setText(listItem.getTitle());
+                    et_content_dialog_album.setText(listItem.getContent());
+
+
+                    btn_photo_dialog_album.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String title = et_title_dialog_album.getText().toString(); // 이전에 작성한 제목을 가져온다.
+                            String content = et_content_dialog_album.getText().toString();
+                            String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                            String beforeTime = listItem.getCurrentDate();
+
+                            mySeoulMateDBHelper.updateAlbum(userId,title, content, currentTime, beforeTime); // beforeTime이 WHERE절로 들어간다.
+
+                            // RecyclerView에 반영
+                            listItem.setTitle(title);
+                            listItem.setContent(content);
+                            listItem.setCurrentDate(currentTime);
+                            notifyItemChanged(currentPosition, listItem);
+                            dialog.dismiss();
+                            Toast.makeText(context, "수정이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    dialog.show();
+
+                    // 삭제하기
+                } else if (position == 1) {
+                    String previousDate = listItem.getCurrentDate();
+                    mySeoulMateDBHelper.deleteAlbum(userId, previousDate);
+                    // RecyclerView에 반영
+                    albumlistItems.remove(currentPosition);
+                    notifyItemChanged(currentPosition);
+                    Toast.makeText(context, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.show();
+
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView tv_title_item_album;
+        private TextView tv_content_item_album;
+        private TextView tv_currentDate_item_album;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            tv_title_item_album = itemView.findViewById(R.id.tv_title_item_album);
+            tv_content_item_album = itemView.findViewById(R.id.tv_content_item_album);
+            tv_currentDate_item_album = itemView.findViewById(R.id.tv_currentDate_item_album);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    currentPosition = getAdapterPosition(); // 현재 Item의 위치
+                    dialog();
+                }
+            });
+        }
+    }
+
+    // Activity에서 호출되는 함수, 현재 AdapterView에 새롭게 게시할 Item을 전달받아 추가하는 목적
+    public void addItem(Album _item) {
+        // 최신 데이터가 맨 위로 올라오게 함
+        albumlistItems.add(0, _item);
+        notifyItemInserted(0);
+    }
 }
+
 
