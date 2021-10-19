@@ -114,7 +114,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         thread = new Thread() {
             @Override
             public void run() {
-                // TODO Auto-generated method stub
                 getXmlData(12);
 //                getXmlData(14);
 //                getXmlData(28);
@@ -144,7 +143,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
         isFabOpen = false;
 
-        fragmentManager = getFragmentManager(); // getSupportFragmentManager() 아닌 점 주의
+        fragmentManager = getFragmentManager();
         mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.fm_location);
         mapFragment.getMapAsync(this);
     }

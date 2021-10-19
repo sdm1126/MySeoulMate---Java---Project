@@ -30,11 +30,11 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyA-Es9GS28Fk_oDu4_MnJUsdZplGEntsEQ" />
+            android:value="AIzaSyC30M7nxd6V0gkl7UPJHl3yo17K1lqtDtI" />
 
         <meta-data
             android:name="com.google.android.geo.APIkey"
-            android:value="AIzaSyA-Es9GS28Fk_oDu4_MnJUsdZplGEntsEQ" />
+            android:value="AIzaSyC30M7nxd6V0gkl7UPJHl3yo17K1lqtDtI" />
 
         <activity
             android:name="kr.or.mrhi.MySeoulMate.Activity.AreaActivity"
