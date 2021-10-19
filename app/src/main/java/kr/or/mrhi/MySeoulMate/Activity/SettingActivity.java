@@ -68,6 +68,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     MySeoulMateDBHelper mySeoulMateDBHelper = MySeoulMateDBHelper.getInstance(getApplicationContext());
                     mySeoulMateDBHelper.deleteUser(firebaseAuth.getCurrentUser().getUid());
                     mySeoulMateDBHelper.dropLike(firebaseAuth.getCurrentUser().getUid());
+                    mySeoulMateDBHelper.dropAlbum(firebaseAuth.getCurrentUser().getUid());
 
                     firebaseAuth.getCurrentUser().delete(); // 연결 끊기
                     Intent intent = new Intent(SettingActivity.this, MainActivity.class);

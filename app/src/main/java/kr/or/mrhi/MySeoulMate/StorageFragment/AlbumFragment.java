@@ -24,6 +24,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -34,8 +36,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -45,7 +45,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import kr.or.mrhi.MySeoulMate.Activity.StorageActivity;
 import kr.or.mrhi.MySeoulMate.Adapter.AlbumAdapter;
 import kr.or.mrhi.MySeoulMate.Album;
 import kr.or.mrhi.MySeoulMate.MediaScanner;
@@ -53,37 +52,42 @@ import kr.or.mrhi.MySeoulMate.MySeoulMateDBHelper;
 import kr.or.mrhi.MySeoulMate.R;
 
 public class AlbumFragment extends Fragment {
+
+    // widget
     private ImageView iv_fragment_album;
     private RecyclerView rv_fragment_album;
-    private AlbumAdapter albumAdapter;
+    private ImageView iv_image_dialog_album;
 
+    // data
     private ArrayList<Album> albumList;
+    private AlbumAdapter albumAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private View v;
-    private static final int REQUEST_IMAGE_CAPTURE = 672;
+    private View view;
+    private static final int REQUEST_IMAGE_CAPTURE = 1001;
     private String imageFilePath;
     private Uri photoUri;
     private Dialog dialog;
-    private ImageView iv_photo_dialog_album;
     private MySeoulMateDBHelper mySeoulMateDBHelper;
-    private StorageActivity storageActivity;
     private MediaScanner mediaScanner;
+
+    // google
+    private FirebaseAuth firebaseAuth;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_album, container, false);
+        view = inflater.inflate(R.layout.fragment_album, container, false);
 
-        iv_fragment_album = v.findViewById(R.id.iv_fragment_album);
-        rv_fragment_album = v.findViewById(R.id.rv_fragment_album);
+        iv_fragment_album = view.findViewById(R.id.iv_fragment_album);
+        rv_fragment_album = view.findViewById(R.id.rv_fragment_album);
         linearLayoutManager = new LinearLayoutManager(getContext());
         rv_fragment_album.setLayoutManager(linearLayoutManager);
 
         setInit();
 
         // 사진 저장 후 미디어 스캐닝을 돌려줘야 갤러리에 반영됨.
-//        mediaScanner = MediaScanner.getInstance(getContext());
+        mediaScanner = MediaScanner.getInstance(getContext());
 
         // 권한 체크
         TedPermission.with(getContext())
@@ -92,13 +96,13 @@ public class AlbumFragment extends Fragment {
                 .setDeniedMessage("거부하셨습니다.")
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .check();
-        return v;
+        return view;
     }
 
     public void setInit() {
         albumList = new ArrayList<>();
-        mySeoulMateDBHelper = new MySeoulMateDBHelper(getContext());
-
+        mySeoulMateDBHelper = MySeoulMateDBHelper.getInstance(getContext());
+        firebaseAuth = FirebaseAuth.getInstance();
 
         // 이전에 저장되어있던 데이터 불러오기
         loadRecentDB();
@@ -112,23 +116,23 @@ public class AlbumFragment extends Fragment {
 
                 EditText et_title_dialog_album = dialog.findViewById(R.id.et_title_dialog_album);
                 EditText et_content_dialog_album = dialog.findViewById(R.id.et_content_dialog_album);
-                iv_photo_dialog_album = dialog.findViewById(R.id.iv_photo_dialog_album);
-                Button btn_close_dialog_album = dialog.findViewById(R.id.btn_close_dialog_album);
-                btn_close_dialog_album = dialog.findViewById(R.id.btn_close_dialog_album);
+                iv_image_dialog_album = dialog.findViewById(R.id.iv_image_dialog_album);
+                Button btn_save_dialog_album = dialog.findViewById(R.id.btn_save_dialog_album);
+                Button btn_image_dialog_album = dialog.findViewById(R.id.btn_image_dialog_album);
 
-                btn_close_dialog_album.setOnClickListener(new View.OnClickListener() {
+                btn_save_dialog_album.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // 데이터베이스에 추가
-                        String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-                        mySeoulMateDBHelper.insertAlbum(et_title_dialog_album.getText().toString(), et_content_dialog_album.getText().toString(), currentTime);
-
                         // RecyclerView에 추가
-                        Album albumItem = new Album();
-                        albumItem.setTitle(et_title_dialog_album.getText().toString());
-                        albumItem.setContent(et_content_dialog_album.getText().toString());
-                        albumItem.setCurrentDate(currentTime);
-                        albumAdapter.addItem(albumItem); // Adapter에게 추가되었음을 알리는 역할
+                        Album album = new Album();
+                        album.setTitle(et_title_dialog_album.getText().toString());
+                        album.setContent(et_content_dialog_album.getText().toString());
+                        String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                        album.setCurrentDate(currentDate);
+                        album.setImage(imageFilePath);
+
+                        mySeoulMateDBHelper.insertAlbum(firebaseAuth.getCurrentUser().getUid(), album);
+                        albumAdapter.addItem(album); // Adapter에게 추가되었음을 알리는 역할
                         rv_fragment_album.smoothScrollToPosition(0);
                         dialog.dismiss();
 
@@ -136,11 +140,10 @@ public class AlbumFragment extends Fragment {
                     }
                 });
 
-                btn_close_dialog_album.setOnClickListener(new View.OnClickListener() {
+                btn_image_dialog_album.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        storageActivity = new StorageActivity();
                         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
                             File photoFile = null;
                             try {
@@ -159,7 +162,6 @@ public class AlbumFragment extends Fragment {
                 });
 
                 dialog.show();
-
             }
         });
     }
@@ -179,12 +181,11 @@ public class AlbumFragment extends Fragment {
 
     // 이전에 저장되어있던 DB가 있으면 불러온다.
     public void loadRecentDB () {
-        albumList = mySeoulMateDBHelper.;
+        albumList = mySeoulMateDBHelper.loadAlbum(firebaseAuth.getCurrentUser().getUid());
         if (albumAdapter == null) {
             albumAdapter = new AlbumAdapter(albumList, requireActivity());
             rv_fragment_album.setHasFixedSize(true); // RecyclerView 성능 강화
             rv_fragment_album.setAdapter(albumAdapter);
-
         }
     }
 
@@ -206,15 +207,15 @@ public class AlbumFragment extends Fragment {
 
             if (exif != null) {
                 exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                exifDegree = exifOrientationToDegress(exifOrientation);
+                exifDegree = exifOrientationToDegrees(exifOrientation);
             } else {
                 exifDegree = 0;
             }
 
             String result = "";
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HHmmss", Locale.getDefault());
-            Date curDate = new Date(System.currentTimeMillis());
-            String filename = formatter.format(curDate);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HHmmss", Locale.getDefault());
+            Date currentDate = new Date(System.currentTimeMillis());
+            String filename = simpleDateFormat.format(currentDate);
 
             String strFolderName = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES) + File.separator + "HONGDROID" + File.separator;
             File file = new File(strFolderName);
@@ -250,11 +251,11 @@ public class AlbumFragment extends Fragment {
             }
 
             // 이미지 뷰에 비트맵을 set하여 이미지 표현
-            iv_photo_dialog_album.setImageBitmap(rotate(bitmap, exifDegree));
+            iv_image_dialog_album.setImageBitmap(rotate(bitmap, exifDegree));
         }
     }
 
-    private int exifOrientationToDegress(int exifOrientation) {
+    private int exifOrientationToDegrees(int exifOrientation) {
         if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
             return 90;
         } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {

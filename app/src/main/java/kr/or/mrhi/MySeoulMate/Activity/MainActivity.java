@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity
                             MySeoulMateDBHelper mySeoulMateDBHelper = MySeoulMateDBHelper.getInstance(getApplicationContext());
                             mySeoulMateDBHelper.insertUser(user);
                             mySeoulMateDBHelper.createLike(user);
+                            mySeoulMateDBHelper.createAlbum(user);
 
                             Intent intent = new Intent(MainActivity.this, AreaActivity.class);
                             showToast("안녕하세요, " + firebaseAuth.getCurrentUser().getDisplayName() + "님! 반갑습니다.");

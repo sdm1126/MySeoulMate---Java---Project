@@ -57,7 +57,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/iv_photo_dialog_album"
+                android:id="@+id/iv_image_dialog_album"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
@@ -127,11 +127,11 @@
             android:padding="10dp">
 
             <Button
-                android:id="@+id/btn_close_dialog_album"
+                android:id="@+id/btn_save_dialog_album"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/optic_yellow"
-                android:text="나가기"
+                android:text="저장"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -160,7 +160,7 @@
             android:padding="10dp">
 
             <Button
-                android:id="@+id/btn_photo_dialog_album"
+                android:id="@+id/btn_image_dialog_album"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/optic_yellow"

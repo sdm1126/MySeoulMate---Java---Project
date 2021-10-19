@@ -3,11 +3,13 @@ package kr.or.mrhi.MySeoulMate.Adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,16 +32,18 @@ import kr.or.mrhi.MySeoulMate.Album;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
 
-    private ArrayList<Album> albumlistItems;
+    private ArrayList<Album> albumList;
     private Context context;
     private MySeoulMateDBHelper mySeoulMateDBHelper;
+    private FirebaseAuth firebaseAuth;
     private int currentPosition;
 
 
-    public AlbumAdapter(ArrayList<Album> listItems, Context context) {
-        this.albumlistItems = listItems;
+    public AlbumAdapter(ArrayList<Album> albumList, Context context) {
+        this.albumList = albumList;
         this.context = context;
-        mySeoulMateDBHelper = new MySeoulMateDBHelper(context);
+        mySeoulMateDBHelper = MySeoulMateDBHelper.getInstance(context);
+        firebaseAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -51,19 +58,19 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull AlbumAdapter.ViewHolder holder, int position) {
-        holder.tv_title_item_album.setText(albumlistItems.get(position).getTitle());
-        holder.tv_content_item_album.setText(albumlistItems.get(position).getContent());
-        holder.tv_currentDate_item_album.setText(albumlistItems.get(position).getCurrentDate());
+        holder.tv_title_item_album.setText(albumList.get(position).getTitle());
+        holder.tv_content_item_album.setText(albumList.get(position).getContent());
+        holder.tv_currentDate_item_album.setText(albumList.get(position).getCurrentDate());
     }
 
     @Override
     public int getItemCount() {
-        return albumlistItems.size();
+        return albumList.size();
     }
 
-    public void dialog() {
+    public void showDialog() {
 
-        Album listItem = albumlistItems.get(currentPosition);
+        Album album = albumList.get(currentPosition);
 
         String[] strChoiceItems = {"수정하기", "삭제하기"};
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -78,39 +85,40 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
                     EditText et_title_dialog_album = dialog.findViewById(R.id.et_title_dialog_album);
                     EditText et_content_dialog_album = dialog.findViewById(R.id.et_content_dialog_album);
-                    Button btn_photo_dialog_album = dialog.findViewById(R.id.btn_photo_dialog_album);
+                    ImageView iv_image_dialog_album = dialog.findViewById(R.id.iv_image_dialog_album);
+                    Button btn_image_dialog_album = dialog.findViewById(R.id.btn_image_dialog_album);
 
-                    et_title_dialog_album.setText(listItem.getTitle());
-                    et_content_dialog_album.setText(listItem.getContent());
+                    et_title_dialog_album.setText(album.getTitle());
+                    et_content_dialog_album.setText(album.getContent());
+                    Glide.with(context).load(album.getImage()).into(iv_image_dialog_album);
 
-
-                    btn_photo_dialog_album.setOnClickListener(new View.OnClickListener() {
+                    btn_image_dialog_album.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             String title = et_title_dialog_album.getText().toString(); // 이전에 작성한 제목을 가져온다.
                             String content = et_content_dialog_album.getText().toString();
-                            String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-                            String beforeTime = listItem.getCurrentDate();
+                            String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                            String previousDate = album.getCurrentDate();
 
-                            mySeoulMateDBHelper.updateAlbum(userId,title, content, currentTime, beforeTime); // beforeTime이 WHERE절로 들어간다.
+                            mySeoulMateDBHelper.updateAlbum(firebaseAuth.getCurrentUser().getUid(), title, content, currentDate, previousDate); // beforeTime이 WHERE절로 들어간다.
 
                             // RecyclerView에 반영
-                            listItem.setTitle(title);
-                            listItem.setContent(content);
-                            listItem.setCurrentDate(currentTime);
-                            notifyItemChanged(currentPosition, listItem);
+                            album.setTitle(title);
+                            album.setContent(content);
+                            album.setCurrentDate(currentDate);
+                            notifyItemChanged(currentPosition, album);
                             dialog.dismiss();
                             Toast.makeText(context, "수정이 완료되었습니다", Toast.LENGTH_SHORT).show();
                         }
                     });
                     dialog.show();
 
-                    // 삭제하기
+                // 삭제하기
                 } else if (position == 1) {
-                    String previousDate = listItem.getCurrentDate();
-                    mySeoulMateDBHelper.deleteAlbum(userId, previousDate);
+                    String previousDate = album.getCurrentDate();
+                    mySeoulMateDBHelper.deleteAlbum(firebaseAuth.getCurrentUser().getUid(), previousDate);
                     // RecyclerView에 반영
-                    albumlistItems.remove(currentPosition);
+                    albumList.remove(currentPosition);
                     notifyItemChanged(currentPosition);
                     Toast.makeText(context, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
                 }
@@ -137,7 +145,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
                 @Override
                 public void onClick(View view) {
                     currentPosition = getAdapterPosition(); // 현재 Item의 위치
-                    dialog();
+                    showDialog();
                 }
             });
         }
@@ -146,7 +154,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     // Activity에서 호출되는 함수, 현재 AdapterView에 새롭게 게시할 Item을 전달받아 추가하는 목적
     public void addItem(Album _item) {
         // 최신 데이터가 맨 위로 올라오게 함
-        albumlistItems.add(0, _item);
+        albumList.add(0, _item);
         notifyItemInserted(0);
     }
 }

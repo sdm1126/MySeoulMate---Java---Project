@@ -16,11 +16,14 @@ import kr.or.mrhi.MySeoulMate.StorageFragment.AlbumFragment;
 import kr.or.mrhi.MySeoulMate.StorageFragment.LikeFragment;
 
 public class StorageActivity extends AppCompatActivity {
+    // widget
     private BottomNavigationView bnv_storage;
+
+    // fragment
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-    private LikeFragment likeFragment;
     private AlbumFragment albumFragment;
+    private LikeFragment likeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +36,10 @@ public class StorageActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.item_like:
+                    case R.id.item_album:
                         setFrag(0);
                         break;
-                    case R.id.item_album:
+                    case R.id.item_like:
                         setFrag(1);
                         break;
                 }
@@ -45,8 +48,8 @@ public class StorageActivity extends AppCompatActivity {
         });
 
         // Fragment별 객체 생성(각 Fragment 클래스 안에 Fragment View를 생성하는 구문 들어가있음)
-        likeFragment = new LikeFragment();
         albumFragment = new AlbumFragment();
+        likeFragment = new LikeFragment();
 
         // 화면 초기 세팅
         setFrag(0);
@@ -60,10 +63,10 @@ public class StorageActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         switch (n) {
             case 0:
-                fragmentTransaction.replace(R.id.fl_storage, likeFragment);
+                fragmentTransaction.replace(R.id.fl_storage, albumFragment);
                 break;
             case 1:
-                fragmentTransaction.replace(R.id.fl_storage, albumFragment);
+                fragmentTransaction.replace(R.id.fl_storage, likeFragment);
                 break;
         }
         fragmentTransaction.commit();
