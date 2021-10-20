@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -86,13 +87,14 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
                     EditText et_title_dialog_album = dialog.findViewById(R.id.et_title_dialog_album);
                     EditText et_content_dialog_album = dialog.findViewById(R.id.et_content_dialog_album);
                     ImageView iv_image_dialog_album = dialog.findViewById(R.id.iv_image_dialog_album);
-                    Button btn_image_dialog_album = dialog.findViewById(R.id.btn_image_dialog_album);
+                    CardView cardView5 = dialog.findViewById(R.id.cardView5);
+                    Button btn_save_dialog_album = dialog.findViewById(R.id.btn_save_dialog_album);
 
                     et_title_dialog_album.setText(album.getTitle());
                     et_content_dialog_album.setText(album.getContent());
                     Glide.with(context).load(album.getImage()).into(iv_image_dialog_album);
-
-                    btn_image_dialog_album.setOnClickListener(new View.OnClickListener() {
+                    cardView5.setVisibility(View.INVISIBLE);
+                    btn_save_dialog_album.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             String title = et_title_dialog_album.getText().toString(); // 이전에 작성한 제목을 가져온다.

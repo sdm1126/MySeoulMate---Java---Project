@@ -13,6 +13,12 @@ public class Album implements Serializable {
 
     }
 
+    public Album(String title, String content, String currentDate) {
+        this.title = title;
+        this.content = content;
+        this.currentDate = currentDate;
+    }
+
     public Album(String title, String content, String currentDate, String image) {
         this.title = title;
         this.content = content;

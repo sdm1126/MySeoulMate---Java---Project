@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.os.Environment.DIRECTORY_PICTURES;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
 
 import android.content.Intent;
@@ -111,7 +112,7 @@ public class AlbumFragment extends Fragment {
         iv_fragment_album.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog = new Dialog(getContext(), android.R.style.Theme_Material_Light_Dialog);
+                Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Material_Light_Dialog);
                 dialog.setContentView(R.layout.dialog_album);
 
                 EditText et_title_dialog_album = dialog.findViewById(R.id.et_title_dialog_album);
@@ -132,6 +133,7 @@ public class AlbumFragment extends Fragment {
                         album.setImage(imageFilePath);
 
                         mySeoulMateDBHelper.insertAlbum(firebaseAuth.getCurrentUser().getUid(), album);
+                        imageFilePath = null;
                         albumAdapter.addItem(album); // Adapter에게 추가되었음을 알리는 역할
                         rv_fragment_album.smoothScrollToPosition(0);
                         dialog.dismiss();
@@ -217,7 +219,7 @@ public class AlbumFragment extends Fragment {
             Date currentDate = new Date(System.currentTimeMillis());
             String filename = simpleDateFormat.format(currentDate);
 
-            String strFolderName = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES) + File.separator + "HONGDROID" + File.separator;
+            String strFolderName = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES) + File.separator + "My Seoul Mate" + File.separator;
             File file = new File(strFolderName);
             if (!file.exists())
                 file.mkdirs();
@@ -275,12 +277,12 @@ public class AlbumFragment extends Fragment {
     PermissionListener permissionListener = new PermissionListener() {
         @Override
         public void onPermissionGranted() {
-            Toast.makeText(getContext(), "권한이 허용됨", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "카메라 사용 권한이 허가되었습니다.", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-            Toast.makeText(getContext(), "권한이 거부됨", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "카메라 사용 권한이 거부되었습니다.", Toast.LENGTH_SHORT).show();
         }
     };
 

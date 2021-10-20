@@ -27,9 +27,10 @@ public class Attraction implements Serializable {
     }
 
     // Location
-    public Attraction(String addr1, String contentid, String mapx, String mapy, String title) {
+    public Attraction(String addr1, String contentid, String contenttypeid, String mapx, String mapy, String title) {
         this.addr1 = addr1;
         this.contentid = contentid;
+        this.contenttypeid = contenttypeid;
         this.mapx = mapx;
         this.mapy = mapy;
         this.title = title;

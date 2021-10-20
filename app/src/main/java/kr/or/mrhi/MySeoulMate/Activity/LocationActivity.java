@@ -74,6 +74,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     private String mapy;
     private String title;
     private String contentid;
+    private String contenttypeid;
     private Thread thread;
 
     // map
@@ -114,12 +115,12 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         thread = new Thread() {
             @Override
             public void run() {
-                getXmlData(12);
-//                getXmlData(14);
-//                getXmlData(28);
-//                getXmlData(32);
-//                getXmlData(38);
-//                getXmlData(39);
+                getXmlData("12");
+//                getXmlData("14");
+//                getXmlData("28");
+//                getXmlData("32");
+//                getXmlData("38");
+//                getXmlData("39");
             }
         };
         thread.start();
@@ -148,7 +149,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
     }
 
-    private void getXmlData(int contenttypeid) {
+    private void getXmlData(String contenttypeid) {
         String tag;
         String queryUrl = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList?serviceKey=" +
                 MainActivity.KEY +
@@ -192,6 +193,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                             xpp.next();
                             contentid = xpp.getText();
                             break;
+                        } else if (tag.equals("contenttypeid")) {
+                            xpp.next();
+                            contenttypeid = xpp.getText();
+                            break;
                         }
 
                     case XmlPullParser.TEXT:
@@ -200,7 +205,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                     case XmlPullParser.END_TAG:
                         tag = xpp.getName(); //태그 이름 얻어오기
                         if (tag.equals("item")) {
-                            attraction = new Attraction(addr1, contentid, mapx, mapy, title);
+                            attraction = new Attraction(addr1, contentid, contenttypeid, mapx, mapy, title);
                             arrayList.add(attraction);
                         }
                         break;
