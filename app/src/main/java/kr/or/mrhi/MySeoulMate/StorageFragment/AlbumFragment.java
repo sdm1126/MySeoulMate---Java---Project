@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,7 +98,30 @@ public class AlbumFragment extends Fragment {
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .check();
 
+        Log.d("확인", "AlbumFragment_onCreateView()");
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Log.d("확인", "AlbumFragment_onViewCreated()");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        albumAdapter.notifyDataSetChanged();
+        Log.d("확인", "AlbumFragment_onResume()");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        Log.d("확인", "AlbumFragment_onPause()");
     }
 
     public void setInit() {
@@ -185,13 +209,11 @@ public class AlbumFragment extends Fragment {
     }
 
     // 이전에 저장되어있던 DB가 있으면 불러온다.
-    public void loadRecentDB () {
+    public void loadRecentDB() {
         albumList = mySeoulMateDBHelper.loadAlbum(firebaseAuth.getCurrentUser().getUid());
-        if (albumAdapter == null) {
-            albumAdapter = new AlbumAdapter(albumList, requireActivity());
-            rv_fragment_album.setHasFixedSize(true); // RecyclerView 성능 강화
-            rv_fragment_album.setAdapter(albumAdapter);
-        }
+        albumAdapter = new AlbumAdapter(albumList, requireActivity());
+        rv_fragment_album.setHasFixedSize(true); // RecyclerView 성능 강화
+        rv_fragment_album.setAdapter(albumAdapter);
     }
 
     @Override

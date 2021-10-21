@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
                                   Manifest.permission.ACCESS_COARSE_LOCATION },
                     MODE_PRIVATE);
         }
-        Log.d("확인", "권한 승인 여부 체크(-1: 미승인, 0: 승인): " + checkPermission1 + " " + checkPermission2);
+        Log.d("확인", "위치 권한 승인 여부 체크(-1: 미승인, 0: 승인): " + checkPermission1 + " " + checkPermission2);
     }
 
     @Override

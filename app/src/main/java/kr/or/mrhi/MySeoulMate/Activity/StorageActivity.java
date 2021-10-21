@@ -7,9 +7,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.navigation.NavigationView;
 
 import kr.or.mrhi.MySeoulMate.R;
 import kr.or.mrhi.MySeoulMate.StorageFragment.AlbumFragment;
@@ -30,20 +33,19 @@ public class StorageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storage);
 
-
         bnv_storage = findViewById(R.id.bnv_storage);
-        bnv_storage.setOnItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bnv_storage.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
+                switch(item.getItemId()) {
                     case R.id.item_album:
-                        setFrag(0);
-                        break;
+                        setFragment(0);
+                        return true;
                     case R.id.item_like:
-                        setFrag(1);
-                        break;
+                        setFragment(1);
+                        return true;
                 }
-                return true;
+                return false;
             }
         });
 
@@ -52,13 +54,12 @@ public class StorageActivity extends AppCompatActivity {
         likeFragment = new LikeFragment();
 
         // 화면 초기 세팅
-        setFrag(0);
-
+        setFragment(0);
     }
 
     // Fragment 교체 실행문
     // bottom menu는 ArrayList식, n은 index에 해당
-    private void setFrag(int n) {
+    private void setFragment(int n) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         switch (n) {

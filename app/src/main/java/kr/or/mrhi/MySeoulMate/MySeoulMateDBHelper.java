@@ -267,28 +267,39 @@ public class MySeoulMateDBHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Album> loadAlbum(String userId) {
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT title, content, currentDate, image FROM " + userId + "AlbumTBL ORDER BY currentDate DESC", null);
-
         ArrayList<Album> arrayList = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = null;
+        Cursor cursor = null;
+        try {
+            sqLiteDatabase = getReadableDatabase();
+            cursor = sqLiteDatabase.rawQuery("SELECT title, content, currentDate, image FROM " + userId + "AlbumTBL ORDER BY currentDate DESC", null);
+            if(cursor.getCount() != 0) {
+                while (cursor.moveToNext()) {
+                    String title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
+                    String content = cursor.getString(cursor.getColumnIndexOrThrow("content"));
+                    String currentDate = cursor.getString(cursor.getColumnIndexOrThrow("currentDate"));
+                    String image = cursor.getString(cursor.getColumnIndexOrThrow("image"));
 
-        if(cursor.getCount() != 0) {
-            while(cursor.moveToNext()) {
-                String title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
-                String content = cursor.getString(cursor.getColumnIndexOrThrow("content"));
-                String currentDate = cursor.getString(cursor.getColumnIndexOrThrow("currentDate"));
-                String image = cursor.getString(cursor.getColumnIndexOrThrow("image"));
+                    Album album = new Album();
+                    album.setTitle(title);
+                    album.setContent(content);
+                    album.setCurrentDate(currentDate);
+                    album.setImage(image);
 
-                Album album = new Album();
-                album.setTitle(title);
-                album.setContent(content);
-                album.setCurrentDate(currentDate);
-                album.setImage(image);
-
-                arrayList.add(album);
+                    arrayList.add(album);
+                }
+            }
+            Log.e("확인", "MySeoulMateDBHelper_loadAlbum() 성공");
+        } catch (Exception e) {
+            Log.e("확인", "MySeoulMateDBHelper_loadAlbum() 실패" + e.toString());
+        } finally {
+            if(cursor != null) {
+                cursor.close();
+            }
+            if(sqLiteDatabase != null) {
+                sqLiteDatabase.close();
             }
         }
-
         return arrayList;
     }
 }

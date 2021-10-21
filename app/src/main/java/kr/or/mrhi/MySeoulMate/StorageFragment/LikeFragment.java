@@ -54,8 +54,6 @@ public class LikeFragment extends Fragment {
         return likeFragment;
     }
 
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -150,6 +148,7 @@ public class LikeFragment extends Fragment {
         rv_fragment_like.setAdapter(likeAdapter);
         likeAdapter.notifyDataSetChanged();
 
+        Log.d("확인", "LikeFragment_onCreateView()");
         return view;
     }
 
@@ -164,7 +163,7 @@ public class LikeFragment extends Fragment {
     public void onPause() {
         super.onPause();
 
-        Log.d("확인", "LikeFragment_onPaused()");
+        Log.d("확인", "LikeFragment_onPause()");
     }
 
     private void showToast(String message) {
