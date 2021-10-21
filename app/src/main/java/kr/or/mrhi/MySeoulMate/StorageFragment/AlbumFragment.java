@@ -210,6 +210,7 @@ public class AlbumFragment extends Fragment {
 
     // 이전에 저장되어있던 DB가 있으면 불러온다.
     public void loadRecentDB() {
+        albumList.clear();
         albumList = mySeoulMateDBHelper.loadAlbum(firebaseAuth.getCurrentUser().getUid());
         albumAdapter = new AlbumAdapter(albumList, requireActivity());
         rv_fragment_album.setHasFixedSize(true); // RecyclerView 성능 강화

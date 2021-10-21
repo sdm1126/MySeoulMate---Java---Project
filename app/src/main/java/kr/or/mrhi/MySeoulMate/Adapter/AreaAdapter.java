@@ -89,7 +89,6 @@ public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.AreaViewHolder
         }
         holder.tv_readcount_item_area.setText("#조회 수 " + arrayList.get(position).getReadcount() + "회");
 
-
         mySeoulMateDBHelper = MySeoulMateDBHelper.getInstance(context.getApplicationContext());
         firebaseAuth = FirebaseAuth.getInstance();
 

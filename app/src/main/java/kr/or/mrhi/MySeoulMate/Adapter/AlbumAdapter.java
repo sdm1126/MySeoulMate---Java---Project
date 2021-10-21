@@ -93,7 +93,72 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
                 @Override
                 public void onClick(View view) {
                     currentPosition = getAdapterPosition(); // 현재 Item의 위치
-                    showDialog();
+                    Album album = albumList.get(currentPosition);
+
+                    String[] strChoiceItems = {"수정하기", "삭제하기"};
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("원하는 작업을 선택하세요");
+                    builder.setItems(strChoiceItems, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int position) {
+                            // 수정하기
+                            if (position == 0) {
+                                Dialog dialog = new Dialog(context, android.R.style.Theme_Material_Light_Dialog);
+                                dialog.setContentView(R.layout.dialog_album);
+
+                                EditText et_title_dialog_album = dialog.findViewById(R.id.et_title_dialog_album);
+                                EditText et_content_dialog_album = dialog.findViewById(R.id.et_content_dialog_album);
+                                ImageView iv_image_dialog_album = dialog.findViewById(R.id.iv_image_dialog_album);
+                                CardView cardView5 = dialog.findViewById(R.id.cardView5);
+                                Button btn_save_dialog_album = dialog.findViewById(R.id.btn_save_dialog_album);
+                                btn_save_dialog_album.setText("수정");
+
+                                et_title_dialog_album.setText(album.getTitle());
+                                et_title_dialog_album.setSelection(et_title_dialog_album.getText().length()); // 수정 켰을 때 커서가 제목 가장 마지막에 가 있도록 함
+                                et_content_dialog_album.setText(album.getContent());
+                                if(album.getImage() == null) {
+                                    iv_image_dialog_album.setVisibility(View.INVISIBLE);
+                                } else {
+                                    iv_image_dialog_album.setScaleType(ImageView.ScaleType.FIT_XY);
+                                    Glide.with(context).load(album.getImage()).into(iv_image_dialog_album);
+                                }
+                                Log.d("확인", "album.getImage(): " + album.getImage());
+                                cardView5.setVisibility(View.INVISIBLE);
+
+                                btn_save_dialog_album.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        String title = et_title_dialog_album.getText().toString(); // 이전에 작성한 제목을 가져온다.
+                                        String content = et_content_dialog_album.getText().toString();
+                                        String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                                        String previousDate = album.getCurrentDate();
+
+                                        mySeoulMateDBHelper.updateAlbum(firebaseAuth.getCurrentUser().getUid(), title, content, currentDate, previousDate); // beforeTime이 WHERE절로 들어간다.
+
+                                        // RecyclerView에 반영
+                                        album.setTitle(title);
+                                        album.setContent(content);
+                                        album.setCurrentDate(currentDate);
+                                        notifyItemChanged(currentPosition, album);
+                                        dialog.dismiss();
+                                        Toast.makeText(context, "수정이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                dialog.show();
+
+                                // 삭제하기
+                            } else if (position == 1) {
+                                String previousDate = album.getCurrentDate();
+                                mySeoulMateDBHelper.deleteAlbum(firebaseAuth.getCurrentUser().getUid(), previousDate);
+
+                                // RecyclerView에 반영
+                                albumList.remove(currentPosition);
+                                notifyDataSetChanged();
+                                Toast.makeText(context, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    builder.show();
                 }
             });
         }
@@ -104,73 +169,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         // 최신 데이터가 맨 위로 올라오게 함
         albumList.add(0, item);
         notifyItemInserted(0);
-    }
-
-    public void showDialog() {
-
-        Album album = albumList.get(currentPosition);
-
-        String[] strChoiceItems = {"수정하기", "삭제하기"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("원하는 작업을 선택하세요");
-        builder.setItems(strChoiceItems, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int position) {
-                // 수정하기
-                if (position == 0) {
-                    Dialog dialog = new Dialog(context, android.R.style.Theme_Material_Light_Dialog);
-                    dialog.setContentView(R.layout.dialog_album);
-
-                    EditText et_title_dialog_album = dialog.findViewById(R.id.et_title_dialog_album);
-                    EditText et_content_dialog_album = dialog.findViewById(R.id.et_content_dialog_album);
-                    ImageView iv_image_dialog_album = dialog.findViewById(R.id.iv_image_dialog_album);
-                    CardView cardView5 = dialog.findViewById(R.id.cardView5);
-                    Button btn_save_dialog_album = dialog.findViewById(R.id.btn_save_dialog_album);
-                    btn_save_dialog_album.setText("수정");
-
-                    et_title_dialog_album.setText(album.getTitle());
-                    et_content_dialog_album.setText(album.getContent());
-                    if(album.getImage() == null) {
-                        iv_image_dialog_album.setImageResource(R.drawable.ic_camera);
-                    } else {
-                        Glide.with(context).load(album.getImage()).into(iv_image_dialog_album);
-                    }
-                    Log.d("확인", "album.getImage(): " + album.getImage());
-
-                    cardView5.setVisibility(View.INVISIBLE);
-                    btn_save_dialog_album.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            String title = et_title_dialog_album.getText().toString(); // 이전에 작성한 제목을 가져온다.
-                            String content = et_content_dialog_album.getText().toString();
-                            String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-                            String previousDate = album.getCurrentDate();
-
-                            mySeoulMateDBHelper.updateAlbum(firebaseAuth.getCurrentUser().getUid(), title, content, currentDate, previousDate); // beforeTime이 WHERE절로 들어간다.
-
-                            // RecyclerView에 반영
-                            album.setTitle(title);
-                            album.setContent(content);
-                            album.setCurrentDate(currentDate);
-                            notifyItemChanged(currentPosition, album);
-                            dialog.dismiss();
-                            Toast.makeText(context, "수정이 완료되었습니다", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dialog.show();
-
-                // 삭제하기
-                } else if (position == 1) {
-                    String previousDate = album.getCurrentDate();
-                    mySeoulMateDBHelper.deleteAlbum(firebaseAuth.getCurrentUser().getUid(), previousDate);
-                    // RecyclerView에 반영
-                    albumList.remove(currentPosition);
-                    notifyItemChanged(currentPosition);
-                    Toast.makeText(context, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        builder.show();
     }
 }
 
