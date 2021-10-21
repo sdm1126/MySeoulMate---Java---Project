@@ -74,7 +74,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     private String mapy;
     private String title;
     private String contentid;
-    private String contenttypeid;
     private Thread thread;
 
     // map
@@ -107,7 +106,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         location = new LatLng(latitude, longitude);
 
         // 위치 정보를 못 찾을 경우(GPS 기능 OFF), 즉시 Activity 종료
-        if(latitude == 0.0 && longitude == 0.0) {
+        if (latitude == 0.0 && longitude == 0.0) {
             Toast.makeText(getApplicationContext(), "위치 정보를 활성화해주세요.", Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -116,11 +115,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void run() {
                 getXmlData("12");
-//                getXmlData("14");
-//                getXmlData("28");
-//                getXmlData("32");
-//                getXmlData("38");
-//                getXmlData("39");
             }
         };
         thread.start();
@@ -236,7 +230,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.fab_location:
                 anim();
                 break;
@@ -263,7 +257,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void anim() {
-        if(isFabOpen) {
+        if (isFabOpen) {
             fab1_location.startAnimation(fab_close);
             fab2_location.startAnimation(fab_close);
             fab3_location.startAnimation(fab_close);
@@ -293,21 +287,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 case "12": // 관광지
                     iv_marker_list.setImageResource(R.drawable.ic_check_circle);
                     break;
-//                case "14": // 문화시설
-//                    iv_marker_list.setImageResource(R.drawable.corporateculture);
-//                    break;
-//                case "28": // 레포츠
-//                    iv_marker_list.setImageResource(R.drawable.running);
-//                    break;
-//                case "32": // 숙박
-//                    iv_marker_list.setImageResource(R.drawable.hotel);
-//                    break;
-//                case "38": // 쇼핑
-//                    iv_marker_list.setImageResource(R.drawable.shoppingcart);
-//                    break;
-//                case "39": // 음식점
-//                    iv_marker_list.setImageResource(R.drawable.menu);
-//                    break;
             }
             marker = googleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(Double.parseDouble(arrayList.get(i).getMapy()), Double.parseDouble(arrayList.get(i).getMapx())))
@@ -446,29 +425,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
 
     //여기부터는 GPS 활성화를 위한 메소드들
-    private void showDialogForLocationServiceSetting() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(LocationActivity.this);
-        builder.setTitle("위치 서비스 비활성화");
-        builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
-                + "위치 설정을 수정하시겠습니까?");
-        builder.setCancelable(true);
-        builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                Intent callGPSSettingIntent
-                        = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);
-            }
-        });
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
-        builder.create().show();
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_no_image" />
+            android:src="@drawable/ic_camera" />
 
     </androidx.cardview.widget.CardView>
 

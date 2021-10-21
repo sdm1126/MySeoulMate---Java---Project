@@ -61,9 +61,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
        delete 과정에서 Inconsistency Detected 발생(새로고침이 다 되기 전 아이템 항목을 불러와서 문제 발생) 하여 currentPosition(holder.getAdapterPosition())으로 변경 */
     @Override
     public void onBindViewHolder(@NonNull AlbumAdapter.ViewHolder holder, int position) {
-        holder.tv_title_item_album.setText(albumList.get(position).getTitle());
-        holder.tv_content_item_album.setText(albumList.get(position).getContent());
-        holder.tv_currentDate_item_album.setText(albumList.get(position).getCurrentDate());
+        holder.tv_title_item_album.setText(albumList.get(holder.getAdapterPosition()).getTitle());
+        holder.tv_content_item_album.setText(albumList.get(holder.getAdapterPosition()).getContent());
+        holder.tv_currentDate_item_album.setText(albumList.get(holder.getAdapterPosition()).getCurrentDate());
     }
 
     @Override
@@ -131,7 +131,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
                     et_title_dialog_album.setText(album.getTitle());
                     et_content_dialog_album.setText(album.getContent());
                     if(album.getImage() == null) {
-                        iv_image_dialog_album.setImageResource(R.drawable.ic_no_image);
+                        iv_image_dialog_album.setImageResource(R.drawable.ic_camera);
                     } else {
                         Glide.with(context).load(album.getImage()).into(iv_image_dialog_album);
                     }
