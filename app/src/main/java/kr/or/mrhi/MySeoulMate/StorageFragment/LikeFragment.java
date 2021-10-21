@@ -123,7 +123,7 @@ public class LikeFragment extends Fragment {
                 if(likeList.get(position).getFirstimage() != null) {
                     Glide.with(getContext()).load(likeList.get(position).getFirstimage()).into(iv_image_dialog_like);
                 } else {
-                    iv_image_dialog_like.setImageResource(R.drawable.ic_no_image);
+                    Glide.with(getContext()).load(R.drawable.ic_no_image).into(iv_image_dialog_like);
                     tv_readcount_dialog_like.setTextColor(R.color.black);
                 }
                 tv_readcount_dialog_like.setText("#조회 수 " + likeList.get(position).getReadcount() + "회");

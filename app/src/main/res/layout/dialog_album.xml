@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
+    android:layout_height="wrap_content"
     android:padding="20dp">
 
     <androidx.cardview.widget.CardView
@@ -12,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
         android:layout_marginRight="10dp"
         app:cardBackgroundColor="#CCFF02"
         app:cardCornerRadius="20dp"
@@ -31,8 +29,8 @@
             android:layout_marginBottom="10dp"
             android:background="@null"
             android:gravity="left|center"
-            android:hint="장소 입력"
-            android:textSize="24sp"
+            android:hint="제목 입력"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
@@ -51,23 +49,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_image_dialog_album"
+        <ImageView
+            android:id="@+id/iv_image_dialog_album"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/iv_image_dialog_album"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_camera"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_no_image" />
 
     </androidx.cardview.widget.CardView>
 
@@ -85,28 +72,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <EditText
+            android:id="@+id/et_content_dialog_album"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:id="@+id/et_content_dialog_album"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@null"
-                android:hint="내용 입력"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@null"
+            android:gravity="left|center"
+            android:hint="내용 입력"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
 
@@ -114,12 +92,14 @@
         android:id="@+id/cardView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
         app:cardBackgroundColor="#CCFF02"
         app:cardCornerRadius="30dp"
         app:cardElevation="2dp"
-        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/cardView3">
+        app:layout_constraintEnd_toEndOf="@+id/cardView3"
+        app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -149,10 +129,10 @@
         android:layout_height="wrap_content"
         app:cardBackgroundColor="#CCFF02"
         app:cardCornerRadius="30dp"
-        android:layout_marginRight="20dp"
         app:cardElevation="2dp"
-        app:layout_constraintEnd_toStartOf="@+id/cardView4"
-        app:layout_constraintTop_toTopOf="@+id/cardView4">
+        android:layout_marginRight="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView4"
+        app:layout_constraintEnd_toStartOf="@+id/cardView4">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

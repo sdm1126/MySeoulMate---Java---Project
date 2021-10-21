@@ -8,6 +8,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 
+import android.content.Context;
 import android.content.Intent;
 
 import android.graphics.Bitmap;
@@ -60,28 +61,26 @@ public class AlbumFragment extends Fragment {
     private ImageView iv_image_dialog_album;
 
     // data
+    private MySeoulMateDBHelper mySeoulMateDBHelper;
     private ArrayList<Album> albumList;
     private AlbumAdapter albumAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private View view;
     private static final int REQUEST_IMAGE_CAPTURE = 1001;
     private String imageFilePath;
     private Uri photoUri;
-    private Dialog dialog;
-    private MySeoulMateDBHelper mySeoulMateDBHelper;
     private MediaScanner mediaScanner;
 
     // google
     private FirebaseAuth firebaseAuth;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_album, container, false);
+        View view = inflater.inflate(R.layout.fragment_album, container, false);
 
         iv_fragment_album = view.findViewById(R.id.iv_fragment_album);
         rv_fragment_album = view.findViewById(R.id.rv_fragment_album);
+
         linearLayoutManager = new LinearLayoutManager(getContext());
         rv_fragment_album.setLayoutManager(linearLayoutManager);
 
@@ -94,9 +93,10 @@ public class AlbumFragment extends Fragment {
         TedPermission.with(getContext())
                 .setPermissionListener(permissionListener)
                 .setRationaleMessage("카메라 권한이 필요합니다.")
-                .setDeniedMessage("거부하셨습니다.")
+                .setDeniedMessage("카메라 권한이 거절되었습니다.")
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .check();
+
         return view;
     }
 
@@ -112,14 +112,17 @@ public class AlbumFragment extends Fragment {
         iv_fragment_album.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Material_Light_Dialog);
-                dialog.setContentView(R.layout.dialog_album);
+                View dialogView = View.inflate(getContext(), R.layout.dialog_album, null);
 
-                EditText et_title_dialog_album = dialog.findViewById(R.id.et_title_dialog_album);
-                EditText et_content_dialog_album = dialog.findViewById(R.id.et_content_dialog_album);
-                iv_image_dialog_album = dialog.findViewById(R.id.iv_image_dialog_album);
-                Button btn_save_dialog_album = dialog.findViewById(R.id.btn_save_dialog_album);
-                Button btn_image_dialog_album = dialog.findViewById(R.id.btn_image_dialog_album);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setView(dialogView);
+
+                EditText et_title_dialog_album = dialogView.findViewById(R.id.et_title_dialog_album);
+                EditText et_content_dialog_album = dialogView.findViewById(R.id.et_content_dialog_album);
+                iv_image_dialog_album = dialogView.findViewById(R.id.iv_image_dialog_album);
+                Button btn_save_dialog_album = dialogView.findViewById(R.id.btn_save_dialog_album);
+                Button btn_image_dialog_album = dialogView.findViewById(R.id.btn_image_dialog_album);
 
                 btn_save_dialog_album.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -136,7 +139,7 @@ public class AlbumFragment extends Fragment {
                         imageFilePath = null;
                         albumAdapter.addItem(album); // Adapter에게 추가되었음을 알리는 역할
                         rv_fragment_album.smoothScrollToPosition(0);
-                        dialog.dismiss();
+                        alertDialog.dismiss();
 
                         Toast.makeText(getContext().getApplicationContext(), "목록에 추가되었습니다", Toast.LENGTH_SHORT).show();
                     }
@@ -163,7 +166,7 @@ public class AlbumFragment extends Fragment {
                     }
                 });
 
-                dialog.show();
+                alertDialog.show();
             }
         });
     }
@@ -285,5 +288,4 @@ public class AlbumFragment extends Fragment {
             Toast.makeText(getContext(), "카메라 사용 권한이 거부되었습니다.", Toast.LENGTH_SHORT).show();
         }
     };
-
 }

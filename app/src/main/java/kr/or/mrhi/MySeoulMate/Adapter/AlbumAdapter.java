@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -35,6 +36,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
     private ArrayList<Album> albumList;
     private Context context;
+
     private MySeoulMateDBHelper mySeoulMateDBHelper;
     private FirebaseAuth firebaseAuth;
     private int currentPosition;
@@ -43,20 +45,20 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     public AlbumAdapter(ArrayList<Album> albumList, Context context) {
         this.albumList = albumList;
         this.context = context;
+
         mySeoulMateDBHelper = MySeoulMateDBHelper.getInstance(context);
         firebaseAuth = FirebaseAuth.getInstance();
-
     }
 
     @NonNull
     @Override
     public AlbumAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View holder = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_album, parent, false);
-
         return new ViewHolder(holder);
     }
 
+    /* 매개변수로 전달 받은 position을 넣을 경우,
+       delete 과정에서 Inconsistency Detected 발생(새로고침이 다 되기 전 아이템 항목을 불러와서 문제 발생) 하여 currentPosition(holder.getAdapterPosition())으로 변경 */
     @Override
     public void onBindViewHolder(@NonNull AlbumAdapter.ViewHolder holder, int position) {
         holder.tv_title_item_album.setText(albumList.get(position).getTitle());
@@ -67,6 +69,41 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return albumList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView tv_title_item_album;
+        private TextView tv_content_item_album;
+        private TextView tv_currentDate_item_album;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            tv_title_item_album = itemView.findViewById(R.id.tv_title_item_album);
+            tv_content_item_album = itemView.findViewById(R.id.tv_content_item_album);
+            tv_currentDate_item_album = itemView.findViewById(R.id.tv_currentDate_item_album);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    currentPosition = getAdapterPosition(); // 현재 Item의 위치
+                    showDialog();
+                }
+            });
+        }
+    }
+
+    // Activity에서 호출되는 함수, 현재 AdapterView에 새롭게 게시할 Item을 전달받아 추가하는 목적
+    public void addItem(Album item) {
+        // 최신 데이터가 맨 위로 올라오게 함
+        albumList.add(0, item);
+        notifyItemInserted(0);
     }
 
     public void showDialog() {
@@ -89,10 +126,17 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
                     ImageView iv_image_dialog_album = dialog.findViewById(R.id.iv_image_dialog_album);
                     CardView cardView5 = dialog.findViewById(R.id.cardView5);
                     Button btn_save_dialog_album = dialog.findViewById(R.id.btn_save_dialog_album);
+                    btn_save_dialog_album.setText("수정");
 
                     et_title_dialog_album.setText(album.getTitle());
                     et_content_dialog_album.setText(album.getContent());
-                    Glide.with(context).load(album.getImage()).into(iv_image_dialog_album);
+                    if(album.getImage() == null) {
+                        iv_image_dialog_album.setImageResource(R.drawable.ic_no_image);
+                    } else {
+                        Glide.with(context).load(album.getImage()).into(iv_image_dialog_album);
+                    }
+                    Log.d("확인", "album.getImage(): " + album.getImage());
+
                     cardView5.setVisibility(View.INVISIBLE);
                     btn_save_dialog_album.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -127,37 +171,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
             }
         });
         builder.show();
-
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView tv_title_item_album;
-        private TextView tv_content_item_album;
-        private TextView tv_currentDate_item_album;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            tv_title_item_album = itemView.findViewById(R.id.tv_title_item_album);
-            tv_content_item_album = itemView.findViewById(R.id.tv_content_item_album);
-            tv_currentDate_item_album = itemView.findViewById(R.id.tv_currentDate_item_album);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    currentPosition = getAdapterPosition(); // 현재 Item의 위치
-                    showDialog();
-                }
-            });
-        }
-    }
-
-    // Activity에서 호출되는 함수, 현재 AdapterView에 새롭게 게시할 Item을 전달받아 추가하는 목적
-    public void addItem(Album _item) {
-        // 최신 데이터가 맨 위로 올라오게 함
-        albumList.add(0, _item);
-        notifyItemInserted(0);
     }
 }
 
