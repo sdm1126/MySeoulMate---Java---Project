@@ -1,4 +1,4 @@
-package kr.or.mrhi.MySeoulMate;
+package kr.or.mrhi.MySeoulMate.Entity;
 
 import java.io.Serializable;
 

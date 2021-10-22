@@ -16,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -30,7 +29,7 @@ import java.util.Date;
 
 import kr.or.mrhi.MySeoulMate.MySeoulMateDBHelper;
 import kr.or.mrhi.MySeoulMate.R;
-import kr.or.mrhi.MySeoulMate.Album;
+import kr.or.mrhi.MySeoulMate.Entity.Album;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
 

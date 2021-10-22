@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import kr.or.mrhi.MySeoulMate.Activity.MainActivity;
 import kr.or.mrhi.MySeoulMate.Activity.MapActivity;
 import kr.or.mrhi.MySeoulMate.Adapter.AreaAdapter;
-import kr.or.mrhi.MySeoulMate.Attraction;
+import kr.or.mrhi.MySeoulMate.Entity.Attraction;
 import kr.or.mrhi.MySeoulMate.R;
 
 // 키워드 검색

@@ -6,9 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
+
+import kr.or.mrhi.MySeoulMate.Entity.Album;
+import kr.or.mrhi.MySeoulMate.Entity.Attraction;
+import kr.or.mrhi.MySeoulMate.Entity.User;
 
 public class MySeoulMateDBHelper extends SQLiteOpenHelper {
     public static MySeoulMateDBHelper mySeoulMateDBHelper;

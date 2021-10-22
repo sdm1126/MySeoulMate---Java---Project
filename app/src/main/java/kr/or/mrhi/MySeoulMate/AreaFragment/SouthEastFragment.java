@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import kr.or.mrhi.MySeoulMate.Activity.MainActivity;
 import kr.or.mrhi.MySeoulMate.Activity.MapActivity;
 import kr.or.mrhi.MySeoulMate.Adapter.AreaAdapter;
-import kr.or.mrhi.MySeoulMate.Attraction;
+import kr.or.mrhi.MySeoulMate.Entity.Attraction;
 import kr.or.mrhi.MySeoulMate.R;
 
 // 동남(강남구, 강동구, 서초구, 송파구)

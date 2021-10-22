@@ -2,7 +2,6 @@ package kr.or.mrhi.MySeoulMate.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-import kr.or.mrhi.MySeoulMate.Activity.MapActivity;
-import kr.or.mrhi.MySeoulMate.Attraction;
+import kr.or.mrhi.MySeoulMate.Entity.Attraction;
 import kr.or.mrhi.MySeoulMate.MySeoulMateDBHelper;
 import kr.or.mrhi.MySeoulMate.R;
 

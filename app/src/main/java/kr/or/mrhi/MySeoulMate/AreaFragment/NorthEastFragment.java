@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import kr.or.mrhi.MySeoulMate.Activity.MainActivity;
 import kr.or.mrhi.MySeoulMate.Activity.MapActivity;
 import kr.or.mrhi.MySeoulMate.Adapter.AreaAdapter;
-import kr.or.mrhi.MySeoulMate.Attraction;
+import kr.or.mrhi.MySeoulMate.Entity.Attraction;
 import kr.or.mrhi.MySeoulMate.R;
 
 // 동북(강북구, 광진구, 노원구, 도봉구, 동대문구, 성동구, 성북구, 중랑구)

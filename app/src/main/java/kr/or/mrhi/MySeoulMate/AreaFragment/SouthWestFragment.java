@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import kr.or.mrhi.MySeoulMate.Activity.MainActivity;
 import kr.or.mrhi.MySeoulMate.Activity.MapActivity;
 import kr.or.mrhi.MySeoulMate.Adapter.AreaAdapter;
-import kr.or.mrhi.MySeoulMate.Attraction;
+import kr.or.mrhi.MySeoulMate.Entity.Attraction;
 import kr.or.mrhi.MySeoulMate.R;
 
 // 서남(강서구, 관악구, 구로구, 금천구, 동작구, 양천구, 영등포구)

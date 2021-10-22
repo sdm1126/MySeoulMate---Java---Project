@@ -6,8 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,7 +29,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import kr.or.mrhi.MySeoulMate.MySeoulMateDBHelper;
 import kr.or.mrhi.MySeoulMate.R;
-import kr.or.mrhi.MySeoulMate.User;
+import kr.or.mrhi.MySeoulMate.Entity.User;
 
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {

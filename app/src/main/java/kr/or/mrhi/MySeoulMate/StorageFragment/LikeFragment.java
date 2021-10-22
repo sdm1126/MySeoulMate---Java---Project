@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import kr.or.mrhi.MySeoulMate.Activity.MapActivity;
 import kr.or.mrhi.MySeoulMate.Adapter.LikeAdapter;
-import kr.or.mrhi.MySeoulMate.Attraction;
+import kr.or.mrhi.MySeoulMate.Entity.Attraction;
 import kr.or.mrhi.MySeoulMate.MySeoulMateDBHelper;
 import kr.or.mrhi.MySeoulMate.R;
 

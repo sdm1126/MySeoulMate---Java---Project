@@ -34,7 +34,7 @@ import kr.or.mrhi.MySeoulMate.AreaFragment.SouthEastFragment;
 import kr.or.mrhi.MySeoulMate.AreaFragment.SouthWestFragment;
 import kr.or.mrhi.MySeoulMate.MySeoulMateDBHelper;
 import kr.or.mrhi.MySeoulMate.R;
-import kr.or.mrhi.MySeoulMate.User;
+import kr.or.mrhi.MySeoulMate.Entity.User;
 import me.relex.circleindicator.CircleIndicator3;
 
 public class AreaActivity extends AppCompatActivity implements View.OnClickListener {

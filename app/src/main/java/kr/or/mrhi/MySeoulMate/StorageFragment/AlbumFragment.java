@@ -6,9 +6,7 @@ import static android.os.Environment.DIRECTORY_PICTURES;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Dialog;
 
-import android.content.Context;
 import android.content.Intent;
 
 import android.graphics.Bitmap;
@@ -49,7 +47,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import kr.or.mrhi.MySeoulMate.Adapter.AlbumAdapter;
-import kr.or.mrhi.MySeoulMate.Album;
+import kr.or.mrhi.MySeoulMate.Entity.Album;
 import kr.or.mrhi.MySeoulMate.MediaScanner;
 import kr.or.mrhi.MySeoulMate.MySeoulMateDBHelper;
 import kr.or.mrhi.MySeoulMate.R;

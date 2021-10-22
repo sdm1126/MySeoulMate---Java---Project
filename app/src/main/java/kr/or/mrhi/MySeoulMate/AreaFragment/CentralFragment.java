@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import kr.or.mrhi.MySeoulMate.Activity.MainActivity;
 import kr.or.mrhi.MySeoulMate.Activity.MapActivity;
 import kr.or.mrhi.MySeoulMate.Adapter.AreaAdapter;
-import kr.or.mrhi.MySeoulMate.Attraction;
+import kr.or.mrhi.MySeoulMate.Entity.Attraction;
 import kr.or.mrhi.MySeoulMate.R;
 
 // 도심(용산구, 종로구, 중구)
