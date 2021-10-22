@@ -34,17 +34,16 @@ import kr.or.mrhi.MySeoulMate.Album;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
 
-    private ArrayList<Album> albumList;
     private Context context;
+    private ArrayList<Album> albumList;
 
     private MySeoulMateDBHelper mySeoulMateDBHelper;
     private FirebaseAuth firebaseAuth;
     private int currentPosition;
 
-
-    public AlbumAdapter(ArrayList<Album> albumList, Context context) {
-        this.albumList = albumList;
+    public AlbumAdapter(Context context, ArrayList<Album> albumList) {
         this.context = context;
+        this.albumList = albumList;
 
         mySeoulMateDBHelper = MySeoulMateDBHelper.getInstance(context);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -89,6 +88,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
             tv_content_item_album = itemView.findViewById(R.id.tv_content_item_album);
             tv_currentDate_item_album = itemView.findViewById(R.id.tv_currentDate_item_album);
 
+            itemView.setTag(getAdapterPosition());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -128,11 +128,11 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
                                 btn_save_dialog_album.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+                                        // 데이터베이스에 반영
                                         String title = et_title_dialog_album.getText().toString(); // 이전에 작성한 제목을 가져온다.
                                         String content = et_content_dialog_album.getText().toString();
                                         String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
                                         String previousDate = album.getCurrentDate();
-
                                         mySeoulMateDBHelper.updateAlbum(firebaseAuth.getCurrentUser().getUid(), title, content, currentDate, previousDate); // beforeTime이 WHERE절로 들어간다.
 
                                         // RecyclerView에 반영
@@ -141,20 +141,22 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
                                         album.setCurrentDate(currentDate);
                                         notifyItemChanged(currentPosition, album);
                                         dialog.dismiss();
-                                        Toast.makeText(context, "수정이 완료되었습니다", Toast.LENGTH_SHORT).show();
+
+                                        Toast.makeText(context, "내용이 수정되었습니다", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                                 dialog.show();
 
-                                // 삭제하기
+                            // 삭제하기
                             } else if (position == 1) {
+                                // 데이터베이스에 반영
                                 String previousDate = album.getCurrentDate();
                                 mySeoulMateDBHelper.deleteAlbum(firebaseAuth.getCurrentUser().getUid(), previousDate);
 
                                 // RecyclerView에 반영
                                 albumList.remove(currentPosition);
                                 notifyDataSetChanged();
-                                Toast.makeText(context, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "목록에서 삭제되었습니다", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -164,7 +166,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         }
     }
 
-    // Activity에서 호출되는 함수, 현재 AdapterView에 새롭게 게시할 Item을 전달받아 추가하는 목적
+    // Fragment에서 호출되는 함수, 현재 AdapterView에 새롭게 게시할 Item을 전달받아 추가하는 목적
     public void addItem(Album item) {
         // 최신 데이터가 맨 위로 올라오게 함
         albumList.add(0, item);

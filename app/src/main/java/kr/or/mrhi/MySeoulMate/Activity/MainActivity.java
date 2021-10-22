@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity
     public static final String APP_NAME = "MySeoulMate";
 
     // widget
-    private ImageButton ib_kakao_main; // 카카오 로그인 버튼
     private SignInButton sib_google_main; // 구글 로그인 버튼
 
     // data
@@ -59,10 +58,10 @@ public class MainActivity extends AppCompatActivity
 
         checkPermissionGranted();
 
-        ib_kakao_main = findViewById(R.id.ib_kakao_main);
+        // findViewById()
         sib_google_main = findViewById(R.id.sib_google_main);
 
-        ib_kakao_main.setOnClickListener(this);
+        // setOnClickListener()
         sib_google_main.setOnClickListener(this);
 
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -94,8 +93,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
-            case R.id.ib_kakao_main:
-                break;
             case R.id.sib_google_main:
                 Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
                 startActivityForResult(intent, REQUEST_CODE_GOOGLE);
@@ -108,12 +105,12 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == REQUEST_CODE_GOOGLE) {
-            // 인증 결과
+            // 인증 결과 받기
             GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             // 인증 결과가 성공이면, 계정 데이터를 받음
             if(googleSignInResult.isSuccess()) {
-                GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount(); // googleSignInAccount에는 모든 계정 정보(프로필 사진 포함)가 담겨 있음
-                resultLogIn(googleSignInAccount); // 로그인 결과값 출력
+                GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
+                resultLogIn(googleSignInAccount);
             }
         }
     }

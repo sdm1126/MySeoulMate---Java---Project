@@ -52,7 +52,7 @@ public class CentralFragment extends Fragment {
     private AreaAdapter.OnMapIconClickListener onMapIconClickListener;
     private AreaAdapter.OnImageIconClickListener onImageIconClickListener;
 
-    public static CentralFragment newInstance() {
+    public static CentralFragment getInstance() {
         CentralFragment centralFragment = new CentralFragment();
         return centralFragment;
     }
@@ -61,31 +61,14 @@ public class CentralFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
+        // 데이터 생성
         thread = new Thread() {
             @Override
             public void run() {
                 arrayList.clear();
-                // 용산구(sigungucode: 21)
-                getXmlData("12", "21");
-//                getXmlData("14", "21");
-//                getXmlData("28", "21");
-//                getXmlData("32", "21");
-//                getXmlData("38", "21");
-//                getXmlData("39", "21");
-                // 종로구(sigungucode: 23)
-                getXmlData("12", "23");
-//                getXmlData("14", "23");
-//                getXmlData("28", "23");
-//                getXmlData("32", "23");
-//                getXmlData("38", "23");
-//                getXmlData("39", "23");
-                // 중구(sigungucode: 24)
-                getXmlData("12", "24");
-//                getXmlData("14", "24");
-//                getXmlData("28", "24");
-//                getXmlData("32", "24");
-//                getXmlData("38", "24");
-//                getXmlData("39", "24");
+                getXmlData("12", "21"); // 용산구(sigungucode: 21)
+                getXmlData("12", "23"); // 종로구(sigungucode: 23)
+                getXmlData("12", "24"); // 중구(sigungucode: 24)
             }
         };
         thread.start();
@@ -114,6 +97,7 @@ public class CentralFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        // 지도 열기 아이콘 클릭 시,
         onMapIconClickListener = new AreaAdapter.OnMapIconClickListener() {
             @Override
             public void onMapIconClick(int position) {
@@ -124,29 +108,35 @@ public class CentralFragment extends Fragment {
             }
         };
 
+        // 이미지 아이콘 클릭 시,
         onImageIconClickListener = new AreaAdapter.OnImageIconClickListener() {
             @Override
             public void onImageIconClick(int position) {
+                // Dialog 생성
                 View view = View.inflate(getContext(), R.layout.dialog_area, null);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 AlertDialog alertDialog = builder.create();
                 alertDialog.setView(view);
                 alertDialog.show();
 
+                // Dialog findViewById()
                 TextView tv_title_dialog_area = view.findViewById(R.id.tv_title_dialog_area);
                 ImageView iv_image_dialog_area = view.findViewById(R.id.iv_image_dialog_area);
                 TextView tv_content_dialog_area = view.findViewById(R.id.tv_content_dialog_area);
                 Button btn_dialog_area = view.findViewById(R.id.btn_dialog_area);
 
+                // Dialog 내용 세팅
+                // 1. 제목
                 tv_title_dialog_area.setText(arrayList.get(position).getTitle());
 
+                // 2. 사진
                 if(arrayList.get(position).getFirstimage() != null) {
                     Glide.with(getContext()).load(arrayList.get(position).getFirstimage()).into(iv_image_dialog_area);
                 } else {
                     iv_image_dialog_area.setImageResource(R.drawable.ic_no_image);
                 }
 
+                // 3. 상세 내용
                 thread = new Thread() {
                     @Override
                     public void run() {
@@ -195,9 +185,10 @@ public class CentralFragment extends Fragment {
                     text.append("이용시간> " + "\n" + usetime + "\n\n");
                 }
 
-                tv_content_dialog_area.setMovementMethod(new ScrollingMovementMethod());
+                tv_content_dialog_area.setMovementMethod(new ScrollingMovementMethod()); // 스크롤 생성
                 tv_content_dialog_area.setText(text);
 
+                // 4. 나가기 버튼
                 btn_dialog_area.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -207,11 +198,13 @@ public class CentralFragment extends Fragment {
             }
         };
 
+        // Adapter & LinearLayoutManager 생성
         areaAdapter = new AreaAdapter(getContext(), arrayList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+
+        // Adapter & LinearLayoutManager 적용
         areaAdapter.setOnMapIconClickListener(onMapIconClickListener);
         areaAdapter.setOnImageIconClickListener(onImageIconClickListener);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rv_fragment_area.setLayoutManager(linearLayoutManager);
         rv_fragment_area.setAdapter(areaAdapter);
         areaAdapter.notifyDataSetChanged();
@@ -224,7 +217,6 @@ public class CentralFragment extends Fragment {
     private void getXmlData(String contenttypeid, String sigungucode) {
         Attraction attraction = null;
         String tag = null;
-
         String queryURL =
                 "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey="
                 + MainActivity.KEY
@@ -324,7 +316,6 @@ public class CentralFragment extends Fragment {
     // 추가 정보
     private void getAdditionalXmlData(String contentid, String contenttypeid) {
         String tag = null;
-
         String queryURL =
                 "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro?serviceKey="
                         + MainActivity.KEY

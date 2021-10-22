@@ -52,7 +52,7 @@ public class SouthWestFragment extends Fragment {
     private AreaAdapter.OnMapIconClickListener onMapIconClickListener;
     private AreaAdapter.OnImageIconClickListener onImageIconClickListener;
 
-    public static SouthWestFragment newInstance() {
+    public static SouthWestFragment getInstance() {
         SouthWestFragment southWestFragment = new SouthWestFragment();
         return southWestFragment;
     }
@@ -61,59 +61,18 @@ public class SouthWestFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
+        // 데이터 생성
         thread = new Thread() {
             @Override
             public void run() {
                 arrayList.clear();
-                // 강서구(sigungucode: 4)
-                getXmlData("12", "4");
-//                getXmlData("14", "4");
-//                getXmlData("28", "4");
-//                getXmlData("32", "4");
-//                getXmlData("38", "4");
-//                getXmlData("39", "4");
-                // 관악구(sigungucode: 5)
-                getXmlData("12", "5");
-//                getXmlData("14", "5");
-//                getXmlData("28", "5");
-//                getXmlData("32", "5");
-//                getXmlData("38", "5");
-//                getXmlData("39", "5");
-                // 구로구(sigungucode: 7)
-                getXmlData("12", "7");
-//                getXmlData("14", "7");
-//                getXmlData("28", "7");
-//                getXmlData("32", "7");
-//                getXmlData("38", "7");
-//                getXmlData("39", "7");
-                // 금천구(sigungucode: 8)
-                getXmlData("12", "8");
-//                getXmlData("14", "8");
-//                getXmlData("28", "8");
-//                getXmlData("32", "8");
-//                getXmlData("38", "8");
-//                getXmlData("39", "8");
-                // 동작구(sigungucode: 12)
-                getXmlData("12", "12");
-//                getXmlData("14", "12");
-//                getXmlData("28", "12");
-//                getXmlData("32", "12");
-//                getXmlData("38", "12");
-//                getXmlData("39", "12");
-                // 양천구(sigungucode: 19)
-                getXmlData("12", "19");
-//                getXmlData("14", "19");
-//                getXmlData("28", "19");
-//                getXmlData("32", "19");
-//                getXmlData("38", "19");
-//                getXmlData("39", "19");
-                // 영등포구(sigungucode: 20)
-                getXmlData("12", "20");
-//                getXmlData("14", "20");
-//                getXmlData("28", "20");
-//                getXmlData("32", "20");
-//                getXmlData("38", "20");
-//                getXmlData("39", "20");
+                getXmlData("12", "4"); // 강서구(sigungucode: 4)
+                getXmlData("12", "5"); // 관악구(sigungucode: 5)
+                getXmlData("12", "7"); // 구로구(sigungucode: 7)
+                getXmlData("12", "8"); // 금천구(sigungucode: 8)
+                getXmlData("12", "12"); // 동작구(sigungucode: 12)
+                getXmlData("12", "19"); // 양천구(sigungucode: 19)
+                getXmlData("12", "20"); // 영등포구(sigungucode: 20)
             }
         };
         thread.start();
@@ -142,6 +101,7 @@ public class SouthWestFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        // 지도 열기 아이콘 클릭 시,
         onMapIconClickListener = new AreaAdapter.OnMapIconClickListener() {
             @Override
             public void onMapIconClick(int position) {
@@ -152,29 +112,35 @@ public class SouthWestFragment extends Fragment {
             }
         };
 
+        // 이미지 아이콘 클릭 시,
         onImageIconClickListener = new AreaAdapter.OnImageIconClickListener() {
             @Override
             public void onImageIconClick(int position) {
+                // Dialog 생성
                 View view = View.inflate(getContext(), R.layout.dialog_area, null);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 AlertDialog alertDialog = builder.create();
                 alertDialog.setView(view);
                 alertDialog.show();
 
+                // Dialog findViewById()
                 TextView tv_title_dialog_area = view.findViewById(R.id.tv_title_dialog_area);
                 ImageView iv_image_dialog_area = view.findViewById(R.id.iv_image_dialog_area);
                 TextView tv_content_dialog_area = view.findViewById(R.id.tv_content_dialog_area);
                 Button btn_dialog_area = view.findViewById(R.id.btn_dialog_area);
 
+                // Dialog 내용 세팅
+                // 1. 제목
                 tv_title_dialog_area.setText(arrayList.get(position).getTitle());
 
+                // 2. 사진
                 if(arrayList.get(position).getFirstimage() != null) {
                     Glide.with(getContext()).load(arrayList.get(position).getFirstimage()).into(iv_image_dialog_area);
                 } else {
                     iv_image_dialog_area.setImageResource(R.drawable.ic_no_image);
                 }
 
+                // 3. 상세 내용
                 thread = new Thread() {
                     @Override
                     public void run() {
@@ -235,11 +201,13 @@ public class SouthWestFragment extends Fragment {
             }
         };
 
+        // Adapter & LinearLayoutManager 생성
         areaAdapter = new AreaAdapter(getContext(), arrayList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+
+        // Adapter & LinearLayoutManager 적용
         areaAdapter.setOnMapIconClickListener(onMapIconClickListener);
         areaAdapter.setOnImageIconClickListener(onImageIconClickListener);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rv_fragment_area.setLayoutManager(linearLayoutManager);
         rv_fragment_area.setAdapter(areaAdapter);
         areaAdapter.notifyDataSetChanged();

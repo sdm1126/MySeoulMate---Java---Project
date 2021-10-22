@@ -74,6 +74,11 @@ public class AlbumFragment extends Fragment {
     // google
     private FirebaseAuth firebaseAuth;
 
+    public static AlbumFragment getInstance() {
+        AlbumFragment albumFragment = new AlbumFragment();
+        return albumFragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -137,7 +142,6 @@ public class AlbumFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 View dialogView = View.inflate(getContext(), R.layout.dialog_album, null);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 AlertDialog alertDialog = builder.create();
                 alertDialog.setView(dialogView);
@@ -151,16 +155,16 @@ public class AlbumFragment extends Fragment {
                 btn_save_dialog_album.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // RecyclerView에 추가
+                        // 객체 생성 및 데이터베이스에 추가
                         Album album = new Album();
                         album.setTitle(et_title_dialog_album.getText().toString());
                         album.setContent(et_content_dialog_album.getText().toString());
                         String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
                         album.setCurrentDate(currentDate);
                         album.setImage(imageFilePath);
-
                         mySeoulMateDBHelper.insertAlbum(firebaseAuth.getCurrentUser().getUid(), album);
-                        imageFilePath = null;
+
+                        imageFilePath = null; // 이미지 경로 초기화
                         albumAdapter.addItem(album); // Adapter에게 추가되었음을 알리는 역할
                         rv_fragment_album.smoothScrollToPosition(0);
                         alertDialog.dismiss();
@@ -212,7 +216,7 @@ public class AlbumFragment extends Fragment {
     public void loadRecentDB() {
         albumList.clear();
         albumList = mySeoulMateDBHelper.loadAlbum(firebaseAuth.getCurrentUser().getUid());
-        albumAdapter = new AlbumAdapter(albumList, requireActivity());
+        albumAdapter = new AlbumAdapter(requireActivity(), albumList);
         rv_fragment_album.setHasFixedSize(true); // RecyclerView 성능 강화
         rv_fragment_album.setAdapter(albumAdapter);
     }

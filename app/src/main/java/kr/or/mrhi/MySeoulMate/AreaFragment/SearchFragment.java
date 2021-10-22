@@ -35,7 +35,7 @@ import kr.or.mrhi.MySeoulMate.Adapter.AreaAdapter;
 import kr.or.mrhi.MySeoulMate.Attraction;
 import kr.or.mrhi.MySeoulMate.R;
 
-// 검색
+// 키워드 검색
 public class SearchFragment extends Fragment {
 
     // widget
@@ -52,7 +52,7 @@ public class SearchFragment extends Fragment {
     private AreaAdapter.OnMapIconClickListener onMapIconClickListener;
     private AreaAdapter.OnImageIconClickListener onImageIconClickListener;
 
-    public static SearchFragment newInstance() {
+    public static SearchFragment getInstance() {
         SearchFragment searchFragment = new SearchFragment();
         return searchFragment;
     }
@@ -61,19 +61,16 @@ public class SearchFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
+        // 키워드 받기
         Bundle bundle = getArguments();
         String keyword = bundle.getString("keyword");
 
+        // 데이터 생성
         thread = new Thread() {
             @Override
             public void run() {
                 arrayList.clear();
                 getXmlData("12", keyword);
-//                getXmlData("14", "21");
-//                getXmlData("28", "21");
-//                getXmlData("32", "21");
-//                getXmlData("38", "21");
-//                getXmlData("39", "21");
             }
         };
         thread.start();
@@ -103,6 +100,7 @@ public class SearchFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        // 지도 열기 아이콘 클릭 시,
         onMapIconClickListener = new AreaAdapter.OnMapIconClickListener() {
             @Override
             public void onMapIconClick(int position) {
@@ -113,29 +111,35 @@ public class SearchFragment extends Fragment {
             }
         };
 
+        // 이미지 아이콘 클릭 시,
         onImageIconClickListener = new AreaAdapter.OnImageIconClickListener() {
             @Override
             public void onImageIconClick(int position) {
+                // Dialog 생성
                 View view = View.inflate(getContext(), R.layout.dialog_area, null);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 AlertDialog alertDialog = builder.create();
                 alertDialog.setView(view);
                 alertDialog.show();
 
+                // Dialog findViewById()
                 TextView tv_title_dialog_area = view.findViewById(R.id.tv_title_dialog_area);
                 ImageView iv_image_dialog_area = view.findViewById(R.id.iv_image_dialog_area);
                 TextView tv_content_dialog_area = view.findViewById(R.id.tv_content_dialog_area);
                 Button btn_dialog_area = view.findViewById(R.id.btn_dialog_area);
 
+                // Dialog 내용 세팅
+                // 1. 제목
                 tv_title_dialog_area.setText(arrayList.get(position).getTitle());
 
+                // 2. 사진
                 if(arrayList.get(position).getFirstimage() != null) {
                     Glide.with(getContext()).load(arrayList.get(position).getFirstimage()).into(iv_image_dialog_area);
                 } else {
                     iv_image_dialog_area.setImageResource(R.drawable.ic_no_image);
                 }
 
+                // 3. 상세 내용
                 thread = new Thread() {
                     @Override
                     public void run() {
@@ -196,11 +200,13 @@ public class SearchFragment extends Fragment {
             }
         };
 
+        // Adapter & LinearLayoutManager 생성
         areaAdapter = new AreaAdapter(getContext(), arrayList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+
+        // Adapter & LinearLayoutManager 적용
         areaAdapter.setOnMapIconClickListener(onMapIconClickListener);
         areaAdapter.setOnImageIconClickListener(onImageIconClickListener);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rv_fragment_area.setLayoutManager(linearLayoutManager);
         rv_fragment_area.setAdapter(areaAdapter);
         areaAdapter.notifyDataSetChanged();

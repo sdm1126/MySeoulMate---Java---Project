@@ -77,6 +77,7 @@ public class AreaActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area);
 
+        // findViewById
         et_area = findViewById(R.id.et_area);
         iv_area = findViewById(R.id.iv_area);
         civ_area = findViewById(R.id.civ_area);
@@ -90,20 +91,24 @@ public class AreaActivity extends AppCompatActivity implements View.OnClickListe
         fab2_area = findViewById(R.id.fab2_area);
         fab3_area = findViewById(R.id.fab3_area);
 
+        // setOnClickListener
         iv_area.setOnClickListener(this);
         fab_area.setOnClickListener(this);
         fab1_area.setOnClickListener(this);
         fab2_area.setOnClickListener(this);
         fab3_area.setOnClickListener(this);
 
+        // 플로팅 액션 버튼 애니메이션 효과
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
         isFabOpen = false;
 
+        // 사용자 아이콘 세팅
         MySeoulMateDBHelper mySeoulMateDBHelper = MySeoulMateDBHelper.getInstance(getApplicationContext());
         user = mySeoulMateDBHelper.loadUser();
         Glide.with(getApplicationContext()).load(user.getUserImage()).into(civ_area);
 
+        // ViewPagerAdapter 생성 및 적용
         viewPagerAdapter = new ViewPagerAdapter(this);
         vp_area.setAdapter(viewPagerAdapter);
         ci_area.setViewPager(vp_area);
@@ -139,7 +144,7 @@ public class AreaActivity extends AppCompatActivity implements View.OnClickListe
 
                     Bundle bundle = new Bundle();
                     bundle.putString("keyword", keyword);
-                    SearchFragment searchFragment = SearchFragment.newInstance();
+                    SearchFragment searchFragment = SearchFragment.getInstance();
                     searchFragment.setArguments(bundle);
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.fl_area, searchFragment).commit();
@@ -199,11 +204,11 @@ public class AreaActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public Fragment createFragment(int position) {
             switch(position) {
-                case 0: return CentralFragment.newInstance();
-                case 1: return NorthEastFragment.newInstance();
-                case 2: return NorthWestFragment.newInstance();
-                case 3: return SouthEastFragment.newInstance();
-                case 4: return SouthWestFragment.newInstance();
+                case 0: return CentralFragment.getInstance();
+                case 1: return NorthEastFragment.getInstance();
+                case 2: return NorthWestFragment.getInstance();
+                case 3: return SouthEastFragment.getInstance();
+                case 4: return SouthWestFragment.getInstance();
             }
             return null;
         }

@@ -52,7 +52,7 @@ public class NorthEastFragment extends Fragment {
     private AreaAdapter.OnMapIconClickListener onMapIconClickListener;
     private AreaAdapter.OnImageIconClickListener onImageIconClickListener;
 
-    public static NorthEastFragment newInstance() {
+    public static NorthEastFragment getInstance() {
         NorthEastFragment northEastFragment = new NorthEastFragment();
         return northEastFragment;
     }
@@ -61,65 +61,18 @@ public class NorthEastFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
+        // 데이터 생성
         thread = new Thread() {
             @Override
             public void run() {
-                // 강북구(sigungucode: 3)
-                getXmlData("12", "3");
-//                getXmlData("14", "3");
-//                getXmlData("28", "3");
-//                getXmlData("32", "3");
-//                getXmlData("38", "3");
-//                getXmlData("39", "3");
-                // 광진구(sigungucode: 6)
-                getXmlData("12", "6");
-//                getXmlData("14", "6");
-//                getXmlData("28", "6");
-//                getXmlData("32", "6");
-//                getXmlData("38", "6");
-//                getXmlData("39", "6");
-                // 노원구(sigungucode: 9)
-                getXmlData("12", "9");
-//                getXmlData("14", "9");
-//                getXmlData("28", "9");
-//                getXmlData("32", "9");
-//                getXmlData("38", "9");
-//                getXmlData("39", "9");
-                // 도봉구(sigungucode: 10)
-                getXmlData("12", "10");
-//                getXmlData("14", "10");
-//                getXmlData("28", "10");
-//                getXmlData("32", "10");
-//                getXmlData("38", "10");
-//                getXmlData("39", "10");
-                // 동대문구(sigungucode: 11)
-                getXmlData("12", "11");
-//                getXmlData("14", "11");
-//                getXmlData("28", "11");
-//                getXmlData("32", "11");
-//                getXmlData("38", "11");
-//                getXmlData("39", "11");
-                // 성동구(sigungucode: 16)
-                getXmlData("12", "16");
-//                getXmlData("14", "16");
-//                getXmlData("28", "16");
-//                getXmlData("32", "16");
-//                getXmlData("38", "16");
-//                getXmlData("39", "16");
-                // 성북구(sigungucode: 17)
-                getXmlData("12", "17");
-//                getXmlData("14", "17");
-//                getXmlData("28", "17");
-//                getXmlData("32", "17");
-//                getXmlData("38", "17");
-//                getXmlData("39", "17");
-                // 중랑구(sigungucode: 25)
-                getXmlData("12", "25");
-//                getXmlData("14", "25");
-//                getXmlData("28", "25");
-//                getXmlData("32", "25");
-//                getXmlData("38", "25");
-//                getXmlData("39", "25");
+                getXmlData("12", "3"); // 강북구(sigungucode: 3)
+                getXmlData("12", "6"); // 광진구(sigungucode: 6)
+                getXmlData("12", "9"); // 노원구(sigungucode: 9)
+                getXmlData("12", "10"); // 도봉구(sigungucode: 10)
+                getXmlData("12", "11"); // 동대문구(sigungucode: 11)
+                getXmlData("12", "16"); // 성동구(sigungucode: 16)
+                getXmlData("12", "17"); // 성북구(sigungucode: 17)
+                getXmlData("12", "25"); // 중랑구(sigungucode: 25)
             }
         };
         thread.start();
@@ -148,6 +101,7 @@ public class NorthEastFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        // 지도 열기 아이콘 클릭 시,
         onMapIconClickListener = new AreaAdapter.OnMapIconClickListener() {
             @Override
             public void onMapIconClick(int position) {
@@ -158,29 +112,35 @@ public class NorthEastFragment extends Fragment {
             }
         };
 
+        // 이미지 아이콘 클릭 시,
         onImageIconClickListener = new AreaAdapter.OnImageIconClickListener() {
             @Override
             public void onImageIconClick(int position) {
+                // Dialog 생성
                 View view = View.inflate(getContext(), R.layout.dialog_area, null);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 AlertDialog alertDialog = builder.create();
                 alertDialog.setView(view);
                 alertDialog.show();
 
+                // Dialog findViewById()
                 TextView tv_title_dialog_area = view.findViewById(R.id.tv_title_dialog_area);
                 ImageView iv_image_dialog_area = view.findViewById(R.id.iv_image_dialog_area);
                 TextView tv_content_dialog_area = view.findViewById(R.id.tv_content_dialog_area);
                 Button btn_dialog_area = view.findViewById(R.id.btn_dialog_area);
 
+                // Dialog 내용 세팅
+                // 1. 제목
                 tv_title_dialog_area.setText(arrayList.get(position).getTitle());
 
+                // 2. 사진
                 if(arrayList.get(position).getFirstimage() != null) {
                     Glide.with(getContext()).load(arrayList.get(position).getFirstimage()).into(iv_image_dialog_area);
                 } else {
                     iv_image_dialog_area.setImageResource(R.drawable.ic_no_image);
                 }
 
+                // 3. 상세 내용
                 thread = new Thread() {
                     @Override
                     public void run() {
@@ -241,11 +201,13 @@ public class NorthEastFragment extends Fragment {
             }
         };
 
+        // Adapter & LinearLayoutManager 생성
         areaAdapter = new AreaAdapter(getContext(), arrayList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+
+        // Adapter & LinearLayoutManager 적용
         areaAdapter.setOnMapIconClickListener(onMapIconClickListener);
         areaAdapter.setOnImageIconClickListener(onImageIconClickListener);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rv_fragment_area.setLayoutManager(linearLayoutManager);
         rv_fragment_area.setAdapter(areaAdapter);
         areaAdapter.notifyDataSetChanged();

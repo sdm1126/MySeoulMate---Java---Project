@@ -49,20 +49,16 @@ public class StorageActivity extends AppCompatActivity {
             }
         });
 
-        // Fragment별 객체 생성(각 Fragment 클래스 안에 Fragment View를 생성하는 구문 들어가있음)
-        albumFragment = new AlbumFragment();
-        likeFragment = new LikeFragment();
+        albumFragment = AlbumFragment.getInstance();
+        likeFragment = LikeFragment.getInstance();
 
-        // 화면 초기 세팅
         setFragment(0);
     }
 
-    // Fragment 교체 실행문
-    // bottom menu는 ArrayList식, n은 index에 해당
-    private void setFragment(int n) {
+    private void setFragment(int number) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        switch (n) {
+        switch (number) {
             case 0:
                 fragmentTransaction.replace(R.id.fl_storage, albumFragment);
                 break;
