@@ -1,12 +1,15 @@
 package kr.or.mrhi.MySeoulMate.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,15 +44,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        Intent intent = new Intent(SettingActivity.this, AreaActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.btn_logout_setting:
@@ -78,11 +72,100 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 }
                 break;
             case R.id.btn_information_setting:
+                View dialogView = View.inflate(getApplicationContext(), R.layout.dialog_setting, null);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                AlertDialog alertDialog = builder.create();
+
+                ImageView iv_call1_dialog_setting = dialogView.findViewById(R.id.iv_call1_dialog_setting);
+                ImageView iv_call2_dialog_setting = dialogView.findViewById(R.id.iv_call2_dialog_setting);
+                ImageView iv_call3_dialog_setting = dialogView.findViewById(R.id.iv_call3_dialog_setting);
+                ImageView iv_call4_dialog_setting = dialogView.findViewById(R.id.iv_call4_dialog_setting);
+                iv_call1_dialog_setting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel://010-2942-8263"));
+                        startActivity(intent);
+                    }
+                });
+                iv_call2_dialog_setting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel://010-5671-1126"));
+                        startActivity(intent);
+                    }
+                });
+                iv_call3_dialog_setting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel://010-9437-7519"));
+                        startActivity(intent);
+                    }
+                });
+                iv_call4_dialog_setting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel://010-5668-4136"));
+                        startActivity(intent);
+                    }
+                });
+
+                ImageView iv_sms1_dialog_setting = dialogView.findViewById(R.id.iv_sms1_dialog_setting);
+                ImageView iv_sms2_dialog_setting = dialogView.findViewById(R.id.iv_sms2_dialog_setting);
+                ImageView iv_sms3_dialog_setting = dialogView.findViewById(R.id.iv_sms3_dialog_setting);
+                ImageView iv_sms4_dialog_setting = dialogView.findViewById(R.id.iv_sms4_dialog_setting);
+                iv_sms1_dialog_setting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:010-2942-8263"));
+                        startActivity(intent);
+                    }
+                });
+                iv_sms2_dialog_setting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms://010-5671-1126"));
+                        startActivity(intent);
+                    }
+                });
+                iv_sms3_dialog_setting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms://010-9437-7519"));
+                        startActivity(intent);
+                    }
+                });
+                iv_sms4_dialog_setting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms://010-5668-4136"));
+                        startActivity(intent);
+                    }
+                });
+
+                Button btn_dialog_setting = dialogView.findViewById(R.id.btn_dialog_setting);
+                btn_dialog_setting.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                alertDialog.setView(dialogView);
+                alertDialog.show();
                 break;
         }
     }
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(SettingActivity.this, AreaActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

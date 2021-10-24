@@ -2,33 +2,31 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:padding="20dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         app:cardBackgroundColor="#CCFF02"
         app:cardCornerRadius="20dp"
         app:cardElevation="2dp"
-        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="20dp">
 
             <TextView
-                android:id="@+id/tv_name1_information"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_gravity="left|center"
-                android:layout_marginLeft="20dp"
+                android:id="@+id/tv_name1_dialog_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:text="박광천"
                 android:textSize="24sp"
@@ -38,23 +36,23 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_call1_information"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="80dp"
-                android:src="@drawable/ic_call"
+                android:id="@+id/iv_call1_dialog_setting"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/ic_call"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_name1_information"
+                app:layout_constraintStart_toEndOf="@+id/tv_name1_dialog_setting"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_sms1_information"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:id="@+id/iv_sms1_dialog_setting"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
-                android:src="@drawable/ic_sms"
+                android:background="@drawable/ic_sms"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_call1_information"
+                app:layout_constraintStart_toEndOf="@+id/iv_call1_dialog_setting"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -64,25 +62,25 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:cardBackgroundColor="#CCFF02"
         app:cardCornerRadius="20dp"
         app:cardElevation="2dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="20dp">
 
             <TextView
-                android:id="@+id/tv_name2_information"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_gravity="left|center"
-                android:layout_marginLeft="20dp"
+                android:id="@+id/tv_name2_dialog_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:text="신동민"
                 android:textSize="24sp"
@@ -92,23 +90,23 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_call2_information"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="80dp"
-                android:src="@drawable/ic_call"
+                android:id="@+id/iv_call2_dialog_setting"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/ic_call"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_name2_information"
+                app:layout_constraintStart_toEndOf="@+id/tv_name2_dialog_setting"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_sms2_information"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:id="@+id/iv_sms2_dialog_setting"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
-                android:src="@drawable/ic_sms"
+                android:background="@drawable/ic_sms"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_call2_information"
+                app:layout_constraintStart_toEndOf="@+id/iv_call2_dialog_setting"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -118,25 +116,25 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:cardBackgroundColor="#CCFF02"
         app:cardCornerRadius="20dp"
         app:cardElevation="2dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cardView2"
+        app:layout_constraintStart_toStartOf="@+id/cardView2"
         app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="20dp">
 
             <TextView
-                android:id="@+id/tv_name3_information"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_gravity="left|center"
-                android:layout_marginLeft="20dp"
+                android:id="@+id/tv_name3_dialog_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:text="윤태준"
                 android:textSize="24sp"
@@ -146,23 +144,23 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_call3_information"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="80dp"
-                android:src="@drawable/ic_call"
+                android:id="@+id/iv_call3_dialog_setting"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/ic_call"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_name3_information"
+                app:layout_constraintStart_toEndOf="@+id/tv_name3_dialog_setting"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_sms3_information"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:id="@+id/iv_sms3_dialog_setting"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
-                android:src="@drawable/ic_sms"
+                android:background="@drawable/ic_sms"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_call3_information"
+                app:layout_constraintStart_toEndOf="@+id/iv_call3_dialog_setting"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -172,25 +170,25 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView4"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:cardBackgroundColor="#CCFF02"
         app:cardCornerRadius="20dp"
         app:cardElevation="2dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cardView3"
+        app:layout_constraintStart_toStartOf="@+id/cardView3"
         app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="20dp">
 
             <TextView
-                android:id="@+id/tv_name4_information"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_gravity="left|center"
-                android:layout_marginLeft="20dp"
+                android:id="@+id/tv_name4_dialog_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:text="이강현"
                 android:textSize="24sp"
@@ -200,23 +198,23 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_call4_information"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="80dp"
-                android:src="@drawable/ic_call"
+                android:id="@+id/iv_call4_dialog_setting"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/ic_call"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_name4_information"
+                app:layout_constraintStart_toEndOf="@+id/tv_name4_dialog_setting"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_sms4_information"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:id="@+id/iv_sms4_dialog_setting"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
-                android:src="@drawable/ic_sms"
+                android:background="@drawable/ic_sms"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_call4_information"
+                app:layout_constraintStart_toEndOf="@+id/iv_call4_dialog_setting"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -227,32 +225,25 @@
         android:id="@+id/cardView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:cardBackgroundColor="#CCFF02"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="2dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/cardView3">
+        app:layout_constraintEnd_toEndOf="@+id/cardView4"
+        app:layout_constraintTop_toBottomOf="@+id/cardView4">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp">
-
-            <Button
-                android:id="@+id/btn_information"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/optic_yellow"
-                android:text="나가기"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btn_dialog_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/optic_yellow"
+            android:text="나가기"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.cardview.widget.CardView>
 
