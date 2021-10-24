@@ -220,7 +220,7 @@ public class NorthWestFragment extends Fragment {
         String queryURL =
                 "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey="
                 + MainActivity.KEY
-                + "&numOfRows=310&MobileApp=" + MainActivity.APP_NAME + "&MobileOS=ETC&arrange=B&contentTypeId=" + contenttypeid + "&areaCode=1&sigunguCode=" + sigungucode;
+                + "&numOfRows=1000&MobileApp=" + MainActivity.APP_NAME + "&MobileOS=ETC&arrange=B&contentTypeId=" + contenttypeid + "&areaCode=1&sigunguCode=" + sigungucode;
 
         try {
             URL url = new URL(queryURL);

@@ -59,8 +59,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
        delete 과정에서 Inconsistency Detected 발생(새로고침이 다 되기 전 아이템 항목을 불러와서 문제 발생) 하여 currentPosition(holder.getAdapterPosition())으로 변경 */
     @Override
     public void onBindViewHolder(@NonNull AlbumAdapter.ViewHolder holder, int position) {
-        holder.tv_title_item_album.setText(albumList.get(holder.getAdapterPosition()).getTitle());
-        holder.tv_content_item_album.setText(albumList.get(holder.getAdapterPosition()).getContent());
+        holder.tv_title_item_album.setText(albumList.get(holder.getAdapterPosition()).getAlbumTitle());
+        holder.tv_content_item_album.setText(albumList.get(holder.getAdapterPosition()).getAlbumContent());
         holder.tv_currentDate_item_album.setText(albumList.get(holder.getAdapterPosition()).getCurrentDate());
     }
 
@@ -112,16 +112,16 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
                                 Button btn_save_dialog_album = dialog.findViewById(R.id.btn_save_dialog_album);
                                 btn_save_dialog_album.setText("수정");
 
-                                et_title_dialog_album.setText(album.getTitle());
+                                et_title_dialog_album.setText(album.getAlbumTitle());
                                 et_title_dialog_album.setSelection(et_title_dialog_album.getText().length()); // 수정 켰을 때 커서가 제목 가장 마지막에 가 있도록 함
-                                et_content_dialog_album.setText(album.getContent());
-                                if(album.getImage() == null) {
+                                et_content_dialog_album.setText(album.getAlbumContent());
+                                if(album.getAlbumImage() == null) {
                                     iv_image_dialog_album.setVisibility(View.INVISIBLE);
                                 } else {
                                     iv_image_dialog_album.setScaleType(ImageView.ScaleType.FIT_XY);
-                                    Glide.with(context).load(album.getImage()).into(iv_image_dialog_album);
+                                    Glide.with(context).load(album.getAlbumImage()).into(iv_image_dialog_album);
                                 }
-                                Log.d("확인", "album.getImage(): " + album.getImage());
+                                Log.d("확인", "album.getAlbumImage(): " + album.getAlbumImage());
                                 cardView5.setVisibility(View.INVISIBLE);
 
                                 btn_save_dialog_album.setOnClickListener(new View.OnClickListener() {
@@ -135,8 +135,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
                                         mySeoulMateDBHelper.updateAlbum(firebaseAuth.getCurrentUser().getUid(), title, content, currentDate, previousDate); // beforeTime이 WHERE절로 들어간다.
 
                                         // RecyclerView에 반영
-                                        album.setTitle(title);
-                                        album.setContent(content);
+                                        album.setAlbumTitle(title);
+                                        album.setAlbumContent(content);
                                         album.setCurrentDate(currentDate);
                                         notifyItemChanged(currentPosition, album);
                                         dialog.dismiss();

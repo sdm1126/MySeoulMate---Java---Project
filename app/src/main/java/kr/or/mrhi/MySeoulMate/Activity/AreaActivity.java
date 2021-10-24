@@ -238,7 +238,7 @@ public class AreaActivity extends AppCompatActivity implements View.OnClickListe
             android.os.Process.killProcess(android.os.Process.myPid());
         } else {
             backPressedTime = currentTime;
-            Toast.makeText(this, "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "한번 더 누르면 종료됩니다.", Toast.LENGTH_LONG).show();
         }
     }
 }

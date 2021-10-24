@@ -105,28 +105,6 @@ public class AlbumFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        Log.d("확인", "AlbumFragment_onViewCreated()");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        albumAdapter.notifyDataSetChanged();
-        Log.d("확인", "AlbumFragment_onResume()");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        Log.d("확인", "AlbumFragment_onPause()");
-    }
-
     public void setInit() {
         albumList = new ArrayList<>();
         mySeoulMateDBHelper = MySeoulMateDBHelper.getInstance(getContext());
@@ -155,11 +133,11 @@ public class AlbumFragment extends Fragment {
                     public void onClick(View view) {
                         // 객체 생성 및 데이터베이스에 추가
                         Album album = new Album();
-                        album.setTitle(et_title_dialog_album.getText().toString());
-                        album.setContent(et_content_dialog_album.getText().toString());
+                        album.setAlbumTitle(et_title_dialog_album.getText().toString());
+                        album.setAlbumContent(et_content_dialog_album.getText().toString());
                         String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
                         album.setCurrentDate(currentDate);
-                        album.setImage(imageFilePath);
+                        album.setAlbumImage(imageFilePath);
                         mySeoulMateDBHelper.insertAlbum(firebaseAuth.getCurrentUser().getUid(), album);
 
                         imageFilePath = null; // 이미지 경로 초기화

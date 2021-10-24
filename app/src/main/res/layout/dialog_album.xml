@@ -51,9 +51,10 @@
 
         <ImageView
             android:id="@+id/iv_image_dialog_album"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_camera" />
 
     </androidx.cardview.widget.CardView>
@@ -127,10 +128,10 @@
         android:id="@+id/cardView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
         app:cardBackgroundColor="#CCFF02"
         app:cardCornerRadius="30dp"
         app:cardElevation="2dp"
-        android:layout_marginRight="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/cardView4"
         app:layout_constraintEnd_toStartOf="@+id/cardView4">
 

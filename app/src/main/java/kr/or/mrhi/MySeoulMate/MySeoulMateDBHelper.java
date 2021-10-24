@@ -31,7 +31,7 @@ public class MySeoulMateDBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE userTBL(" +
                 "userId TEXT NOT NULL PRIMARY KEY," +
                 "userName TEXT NOT NULL," +
-                "userImage TEXT NOT NULL);");
+                "userImage TEXT);");
     }
 
     @Override
@@ -193,7 +193,7 @@ public class MySeoulMateDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = null;
         try {
             sqLiteDatabase = this.getWritableDatabase();
-            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + user.getUserId() + "AlbumTBL(title TEXT, content TEXT, currentDate TEXT NOT NULL PRIMARY KEY, image TEXT);");
+            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + user.getUserId() + "AlbumTBL(albumTitle TEXT, albumContent TEXT, currentDate TEXT NOT NULL PRIMARY KEY, albumImage TEXT);");
             Log.e("확인", "MySeoulMateDBHelper_createAlbum() 성공");
         } catch (Exception e) {
             Log.e("확인", "MySeoulMateDBHelper_createAlbum() 실패" + e.toString());
@@ -208,11 +208,11 @@ public class MySeoulMateDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = null;
         try {
             sqLiteDatabase = this.getWritableDatabase();
-            sqLiteDatabase.execSQL("INSERT INTO " + userId + "AlbumTBL (title, content, currentDate, image) VALUES ('"
-                    + album.getTitle() + "','"
-                    + album.getContent() + "','"
+            sqLiteDatabase.execSQL("INSERT INTO " + userId + "AlbumTBL (albumTitle, albumContent, currentDate, albumImage) VALUES ('"
+                    + album.getAlbumTitle() + "','"
+                    + album.getAlbumContent() + "','"
                     + album.getCurrentDate() + "','"
-                    + album.getImage() + "');");
+                    + album.getAlbumImage() + "');");
             Log.e("확인", "MySeoulMateDBHelper_insertAlbum() 성공");
         } catch (Exception e) {
             Log.e("확인", "MySeoulMateDBHelper_insertAlbum() 실패 " + e.toString());
@@ -253,11 +253,11 @@ public class MySeoulMateDBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updateAlbum(String userId, String title, String content, String currentDate, String previousDate) {
+    public void updateAlbum(String userId, String albumTitle, String albumContent, String currentDate, String previousDate) {
         SQLiteDatabase sqLiteDatabase = null;
         try {
             sqLiteDatabase = this.getWritableDatabase();
-            sqLiteDatabase.execSQL("UPDATE " + userId + "AlbumTBL SET title = '" + title + "', content = '" + content + "', currentDate = '" + currentDate + "' WHERE currentDate = '" + previousDate + "';");
+            sqLiteDatabase.execSQL("UPDATE " + userId + "AlbumTBL SET albumTitle = '" + albumTitle + "', albumContent = '" + albumContent + "', currentDate = '" + currentDate + "' WHERE currentDate = '" + previousDate + "';");
             Log.e("확인", "MySeoulMateDBHelper_updateAlbum() 성공");
         } catch (Exception e) {
             Log.e("확인", "MySeoulMateDBHelper_updateAlbum() 실패" + e.toString());
@@ -274,19 +274,19 @@ public class MySeoulMateDBHelper extends SQLiteOpenHelper {
         Cursor cursor = null;
         try {
             sqLiteDatabase = getReadableDatabase();
-            cursor = sqLiteDatabase.rawQuery("SELECT title, content, currentDate, image FROM " + userId + "AlbumTBL ORDER BY currentDate DESC", null);
+            cursor = sqLiteDatabase.rawQuery("SELECT albumTitle, albumContent, currentDate, albumImage FROM " + userId + "AlbumTBL ORDER BY currentDate DESC", null);
             if(cursor.getCount() != 0) {
                 while (cursor.moveToNext()) {
-                    String title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
-                    String content = cursor.getString(cursor.getColumnIndexOrThrow("content"));
+                    String title = cursor.getString(cursor.getColumnIndexOrThrow("albumTitle"));
+                    String content = cursor.getString(cursor.getColumnIndexOrThrow("albumContent"));
                     String currentDate = cursor.getString(cursor.getColumnIndexOrThrow("currentDate"));
-                    String image = cursor.getString(cursor.getColumnIndexOrThrow("image"));
+                    String image = cursor.getString(cursor.getColumnIndexOrThrow("albumImage"));
 
                     Album album = new Album();
-                    album.setTitle(title);
-                    album.setContent(content);
+                    album.setAlbumTitle(title);
+                    album.setAlbumContent(content);
                     album.setCurrentDate(currentDate);
-                    album.setImage(image);
+                    album.setAlbumImage(image);
 
                     arrayList.add(album);
                 }

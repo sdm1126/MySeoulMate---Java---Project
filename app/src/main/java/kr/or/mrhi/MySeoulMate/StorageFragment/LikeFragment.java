@@ -135,12 +135,17 @@ public class LikeFragment extends Fragment {
                 }
                 // 6. 조회 수
                 tv_readcount_dialog_like.setText("#조회 수 " + likeList.get(position).getReadcount() + "회");
-                // 7. 닫기
+                // 7. 나가기
                 btn_dialog_like.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        alertDialog.dismiss();
+                        if(isLiked == false) {
+                            mySeoulMateDBHelper.deleteLike(firebaseAuth.getCurrentUser().getUid(), likeList.get(position));
+                        } else {
+                            mySeoulMateDBHelper.insertLike(firebaseAuth.getCurrentUser().getUid(), likeList.get(position));
+                        }
 
+                        alertDialog.dismiss();
                         likeList = mySeoulMateDBHelper.loadLike(firebaseAuth.getCurrentUser().getUid());
                         likeAdapter = new LikeAdapter(getContext(), likeList);
                         likeAdapter.setOnLikeItemClickListener(onLikeItemClickListener);

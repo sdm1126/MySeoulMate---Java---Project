@@ -4,42 +4,42 @@ import java.io.Serializable;
 
 public class Album implements Serializable {
 
-    private String title;
-    private String content;
+    private String albumTitle;
+    private String albumContent;
     private String currentDate;
-    private String image;
+    private String albumImage;
 
     public Album() {
 
     }
 
-    public Album(String title, String content, String currentDate) {
-        this.title = title;
-        this.content = content;
+    public Album(String albumTitle, String albumContent, String currentDate) {
+        this.albumTitle = albumTitle;
+        this.albumContent = albumContent;
         this.currentDate = currentDate;
     }
 
-    public Album(String title, String content, String currentDate, String image) {
-        this.title = title;
-        this.content = content;
+    public Album(String albumTitle, String albumContent, String currentDate, String albumImage) {
+        this.albumTitle = albumTitle;
+        this.albumContent = albumContent;
         this.currentDate = currentDate;
-        this.image = image;
+        this.albumImage = albumImage;
     }
 
-    public String getTitle() {
-        return title;
+    public String getAlbumTitle() {
+        return albumTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setAlbumTitle(String albumTitle) {
+        this.albumTitle = albumTitle;
     }
 
-    public String getContent() {
-        return content;
+    public String getAlbumContent() {
+        return albumContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setAlbumContent(String albumContent) {
+        this.albumContent = albumContent;
     }
 
     public String getCurrentDate() {
@@ -50,12 +50,12 @@ public class Album implements Serializable {
         this.currentDate = currentDate;
     }
 
-    public String getImage() {
-        return image;
+    public String getAlbumImage() {
+        return albumImage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setAlbumImage(String albumImage) {
+        this.albumImage = albumImage;
     }
 }
 

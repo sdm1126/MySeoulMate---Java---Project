@@ -34,7 +34,7 @@ import kr.or.mrhi.MySeoulMate.Entity.User;
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
-    public static final String KEY = "WB%2FKFtQpqhM4crWOn0JtKrTtQAxKlqupu%2BQmIG3QXH%2Biqez62WWkET7wO99U6zLOzlymB6z7Uhls3gpu%2F3sCZg%3D%3D";
+    public static final String KEY = "Wz8GwUZUVvXxDsEixBHhdbwMAczfPU0KLf6%2FXdL4gJ0ksNAE9hWYyPuqwaTMutaTdIziAwdItUxPLGqtlcWHYw%3D%3D";
     public static final String APP_NAME = "MySeoulMate";
 
     // widget
