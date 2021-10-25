@@ -47,11 +47,11 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyC30M7nxd6V0gkl7UPJHl3yo17K1lqtDtI" />
+            android:value="${googleMapApiKey}" />
 
         <meta-data
             android:name="com.google.android.geo.APIkey"
-            android:value="AIzaSyC30M7nxd6V0gkl7UPJHl3yo17K1lqtDtI" />
+            android:value="${googleMapApiKey}" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

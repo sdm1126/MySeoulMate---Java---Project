@@ -27,6 +27,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import kr.or.mrhi.MySeoulMate.BuildConfig;
 import kr.or.mrhi.MySeoulMate.MySeoulMateDBHelper;
 import kr.or.mrhi.MySeoulMate.R;
 import kr.or.mrhi.MySeoulMate.Entity.User;
@@ -34,7 +35,7 @@ import kr.or.mrhi.MySeoulMate.Entity.User;
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
-    public static final String KEY = "Wz8GwUZUVvXxDsEixBHhdbwMAczfPU0KLf6%2FXdL4gJ0ksNAE9hWYyPuqwaTMutaTdIziAwdItUxPLGqtlcWHYw%3D%3D";
+    public static final String KEY = BuildConfig.KTO_API_KEY;
     public static final String APP_NAME = "MySeoulMate";
 
     // widget

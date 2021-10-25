@@ -3,6 +3,10 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def googleMapApiKey = properties.getProperty('googlemap_api_key')
+
 android {
     compileSdk 31
 
@@ -12,6 +16,9 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
+
+        manifestPlaceholders = [googleMapApiKey:googleMapApiKey]
+        buildConfigField("String", "KTO_API_KEY", properties['kto_api_key'])
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
