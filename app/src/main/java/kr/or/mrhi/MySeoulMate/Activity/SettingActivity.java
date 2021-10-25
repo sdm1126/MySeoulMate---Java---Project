@@ -76,6 +76,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 AlertDialog alertDialog = builder.create();
 
+                // 전화
                 ImageView iv_call1_dialog_setting = dialogView.findViewById(R.id.iv_call1_dialog_setting);
                 ImageView iv_call2_dialog_setting = dialogView.findViewById(R.id.iv_call2_dialog_setting);
                 ImageView iv_call3_dialog_setting = dialogView.findViewById(R.id.iv_call3_dialog_setting);
@@ -109,6 +110,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 });
 
+                // 문자
                 ImageView iv_sms1_dialog_setting = dialogView.findViewById(R.id.iv_sms1_dialog_setting);
                 ImageView iv_sms2_dialog_setting = dialogView.findViewById(R.id.iv_sms2_dialog_setting);
                 ImageView iv_sms3_dialog_setting = dialogView.findViewById(R.id.iv_sms3_dialog_setting);
