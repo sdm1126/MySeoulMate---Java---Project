@@ -1,0 +1,59 @@
+/* article - 본인 내용 입력 요망 */
+main {
+  width: 900px;
+  height: auto;
+}
+
+hr {
+  height: 1px;
+  background-color: black;
+  border: 0;
+}
+
+.head {
+  width: 300px;
+  height: 48px;
+  margin: 20px 0;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.head h2 {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.main {
+  margin: 20px 0;
+}
+
+.main h1 {
+  margin-bottom: 20px;
+}
+
+.main table {
+  width: 900px;
+  border-collapse: collapse;
+  border: 1px solid rgb(180, 177, 177);
+}
+
+.main table td {
+  height: 75px;
+  text-align: center;
+  border: 1px solid rgb(180, 177, 177);
+}
+
+td.title {
+  width: 330px;
+  height: 200px;
+  background-color: #eaeaea;
+  font-weight: bold;
+}
+
+.popup{
+  margin-top: 10px;
+}
+

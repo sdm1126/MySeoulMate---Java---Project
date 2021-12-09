@@ -1,0 +1,100 @@
+/* article - 본인 내용 입력 요망 */
+main {
+  width: 700px;
+  height: auto;
+  float: right;
+}
+
+hr {
+  height: 1px;
+  background-color: black;
+  border: 0;
+}
+
+.head {
+  width: 300px;
+  height: 48px;
+  margin: 20px 0;
+}
+
+h2 {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.main {
+  margin: 20px 0;
+}
+
+.main table {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+.main table tr :last-child {
+  width: 500px;
+}
+
+.main table tr td {
+  height: 50px;
+  text-align: center;
+  border: 1px solid black;
+}
+
+td.title {
+  width: 200px;
+  background-color: #eaeaea;
+  font-weight: bold;
+}
+
+td#content {
+  height: 300px;
+}
+
+td > input {
+  height: 50px;
+  padding: 5px;
+  border: none;
+  outline: none;
+}
+
+td > input[type=file]{
+  height: 30px;
+}
+
+textarea {
+  padding: 5px;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+td > textarea {
+  height: 300px;
+}
+
+.terms {
+  width: 700px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#terms1_text {
+  width: 700px;
+  margin-bottom: 20px;
+  resize: none;
+  outline: none;
+}
+
+.button {
+  width: 700px;
+  text-align: center;
+}
+
+.button > input {
+  width: 100px;
+  height: 40px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}

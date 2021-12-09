@@ -1,0 +1,91 @@
+main {
+  width: 700px;
+  height: auto;
+  float: right;
+}
+
+.h2 {
+  width: 360px;
+  height: 48px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+hr {
+  background-color: black;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.name {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.name > table > tr {
+  width: 500px;
+}
+
+td {
+  height: 50px;
+  /* padding-top: 5px;
+    padding-bottom: 5px; */
+}
+
+tr :nth-child(odd) {
+  width: 200px;
+  font-size: 18px;
+}
+
+tr :nth-child(even) {
+  width: 300px;
+  font-size: 18px;
+}
+
+td input {
+  outline: none;
+}
+
+tr.gender > td > select {
+  width: 100px;
+}
+
+tr.id > td > input {
+  width: 250px;
+}
+
+tr.password > td > input {
+  width: 250px;
+}
+
+tr.password_confirm > td > input {
+  width: 250px;
+}
+
+tr.email > td > input {
+  width: 100px;
+}
+
+tr.email > td > select {
+  width: 150px;
+}
+
+tr.phone > td > input {
+  width: 100px;
+}
+
+.buttons {
+  width: 300px;
+  display: flex;
+  justify-content: space-around;
+  margin: 30px auto;
+}
+
+.buttons > input {
+  width: 100px;
+  height: 40px;
+  font-weight: bold;
+}

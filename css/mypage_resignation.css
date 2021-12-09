@@ -1,0 +1,49 @@
+main {
+  width: 700px;
+  height: auto;
+  float: right;
+}
+
+.h2 {
+  width: 360px;
+  height: 48px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+hr {
+  background-color: black;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.warning {
+  width: 700px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.warning h3 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.warning li {
+  width: 700px;
+  list-style-type: none;
+  margin-bottom: 10px;
+}
+
+.button {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.button input {
+  width: 100px;
+  height: 40px;
+  font-weight: bold;
+}

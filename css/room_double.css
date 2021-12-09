@@ -1,0 +1,62 @@
+article .section1 {
+  width: 700px;
+  height: 300px;
+}
+
+article .section1 img {
+  object-fit: cover;
+  width: 700px;
+  height: 300px;
+}
+
+/* main========================================== */
+
+main {
+  width: 700px;
+  height: auto;
+  float: right;
+}
+
+article.main {
+  margin: 20px 0;
+}
+
+main li {
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+hr {
+  height: 1px;
+  background-color: black;
+  border: 0;
+  margin-top: 30px;
+}
+
+.head {
+  width: 300px;
+  height: 48px;
+  margin: 20px 0;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.room1 {
+  width: 700px;
+}
+
+.room2 {
+  width: 700px;
+  margin-bottom: 30px;
+}

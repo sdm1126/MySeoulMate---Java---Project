@@ -1,0 +1,91 @@
+article .section1 {
+  width: 700px;
+  height: 300px;
+}
+
+article .section1 img {
+  object-fit: cover;
+  width: 700px;
+  height: 300px;
+}
+
+/* main========================================== */
+
+main {
+  width: 700px;
+  height: auto;
+  float: right;
+}
+
+main li {
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+article.head hr {
+  width: 700px;
+  height: 1px;
+  background-color: black;
+  border: 0;
+  margin-top: 10px;
+}
+
+hr {
+  height: 1px;
+  background-color: black;
+  border: 0;
+  margin-top: 10px;
+}
+
+.head {
+  width: 300px;
+  height: 48px;
+  margin: 20px 0;
+}
+
+.dining1 h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.dining2 h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.dining1 {
+  margin: 20px 0;
+}
+
+.dining1 table {
+  width: 700px;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+.dining1 table td {
+  height: 60px;
+  text-align: center;
+  border: 1px solid rgb(199, 196, 196);
+}
+
+td.title {
+  width: 150px;
+  height: 200px;
+  background-color: #eaeaea;
+  font-weight: bold;
+}
+
+.dining2 {
+  margin-bottom: 30px;
+}

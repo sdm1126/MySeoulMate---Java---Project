@@ -1,0 +1,118 @@
+main {
+  width: 700px;
+  min-height: 550px;
+  float: right;
+}
+
+div.h2 {
+  width: 360px;
+  height: 48px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+hr {
+  background-color: black;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.span {
+  width: 700px;
+  display: flex;
+  justify-content: right;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.search {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.search select {
+  width: 120px;
+  height: 40px;
+}
+
+.search input[type="text"] {
+  width: 320px;
+  height: 40px;
+}
+
+.search input[type="submit"] {
+  width: 70px;
+  height: 40px;
+  font-weight: bold;
+}
+
+.table {
+  width: 700px;
+  margin-bottom: 50px;
+}
+
+.table table,
+th,
+tr,
+td {
+  border: 1px solid gainsboro;
+  border-collapse: collapse;
+}
+
+.table table th,
+tr {
+  width: 200px;
+  height: 50px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #eaeaea;
+}
+
+.table table tr td:nth-child(2) {
+  width: 500px;
+  max-width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.button {
+  position: fixed;
+  width: 700px;
+  text-align: center;
+  display: flex;
+  justify-content: right;
+  bottom: 320px;
+}
+
+.button input {
+  width: 100px;
+  height: 40px;
+  font-weight: bold;
+}
+
+.paging {
+  position: absolute;
+  transform: translate(-200%, -50%);
+}
+.paging a {
+  /*
+  display: inline-block 인라인 요소의 특징과 블록 요소의 특징을 모두 갖는다
+  크기를 가질 수 있으며 텍스트 정렬도 적용받는다
+  */
+  display: inline-block;
+  font-weight: bold;
+  padding: 5px 15px;
+  border: 1px solid #ccc;
+  color: #000;
+  background-color: #e5ebf0;
+}
+
+.write {
+  position: absolute;
+  transform: translate(0%, -50%);
+}

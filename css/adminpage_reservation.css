@@ -1,0 +1,89 @@
+main {
+  width: 700px;
+  height: auto;
+  float: right;
+}
+
+div.h2 {
+  width: 360px;
+  height: 48px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+hr {
+  background-color: black;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.span {
+  width: 700px;
+  display: flex;
+  justify-content: right;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.search {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.search select {
+  width: 80px;
+  height: 30px;
+}
+
+.search input[type="text"] {
+  width: 200px;
+  height: 30px;
+}
+
+.table {
+  width: 700px;
+  margin-bottom: 50px;
+}
+
+.table table,
+th,
+tr,
+td {
+  border: 1px solid gainsboro;
+  border-collapse: collapse;
+}
+
+.table table th,
+tr {
+  width: 100px;
+  height: 40px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #eaeaea;
+}
+
+.table table th:nth-child(3), th:nth-child(4){
+  width: 300px;
+  /* 2021-11-29 수정 게시판 제목 */
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.btn{
+  width: 50px;
+  height: 30px;
+  font-weight: bold;
+}
+
+.btn-excel{
+  width: 100px;
+  position: absolute;
+  right: 0;
+}
