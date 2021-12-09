@@ -71,7 +71,7 @@ function get_paging($write_pages, $current_page, $total_page, $url) {
 
     $str = '';
     // 1. 현재 페이지가 1페이지가 아니고, 2페이지 이상이라면 처음 가기를 등록한다.
-    ($current_page > 1) ? ($str .= '<a href="' . $url . '1" class="arrow pprev">처음</a>' . PHP_EOL) : ''; // 'PHP_EOL'은 \n 이라는 뜻
+    ($current_page > 1) ? ($str .= '<a href="' . $url . '1" class="arrow pprev"><<</a>' . PHP_EOL) : ''; // 'PHP_EOL'은 \n 이라는 뜻
 
     // 2. 시작페이지와 끝페이지를 보여준다.(끝페이지가 중요)
     // 현재 12면 시작11~끝20
@@ -80,7 +80,7 @@ function get_paging($write_pages, $current_page, $total_page, $url) {
     if ($end_page >= $total_page) $end_page = $total_page;
 
     // 3 (예) 10페이지 넘어가면 11페이지부터 '이전'이 생김, 이전 버튼 누르면 10페이지 보임)
-    if ($start_page > 1) $str .= '<a href="' . $url . ($start_page - 1) . '" class="arrow prev">이전</a>' . PHP_EOL;
+    if ($start_page > 1) $str .= '<a href="' . $url . ($start_page - 1) . '" class="arrow prev"><</a>' . PHP_EOL;
 
     // 4. 전체 페이지가 2페이지 이상이면, 예) 현재 12페이지(=시작 11페이지, 끝 20페이지)
     // [처음][이전][11][12][13]...[19][20]
@@ -94,11 +94,11 @@ function get_paging($write_pages, $current_page, $total_page, $url) {
     }
 
     // 5. 전체 페이지가 끝 페이지보다 클 때 다음 누르면 다음이 있으니까 다음 페이지로 이동(예) 시작11~끝20일때, 20에서 다음 누르면 21로 감)
-    if ($total_page > $end_page) $str .= '<a href="' . $url . ($end_page + 1) . '" class="arrow next">다음</a>' . PHP_EOL;
+    if ($total_page > $end_page) $str .= '<a href="' . $url . ($end_page + 1) . '" class="arrow next">></a>' . PHP_EOL;
 
     // 6. 현재페이지가 전체 페이지보다 작다면 [처음][이전][11]스트롱[12]스트롱[13]...[19][20][다음][끝]
     if ($current_page < $total_page) {
-        $str .= '<a href="' . $url . $total_page . '" class="arrow nnext">맨끝</a>' . PHP_EOL;
+        $str .= '<a href="' . $url . $total_page . '" class="arrow nnext">>></a>' . PHP_EOL;
     }
 
     if ($str)

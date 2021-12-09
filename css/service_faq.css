@@ -51,7 +51,6 @@ h2 {
 
 .table {
   width: 700px;
-  margin-bottom: 50px;
 }
 
 .table table,
@@ -80,3 +79,14 @@ tr {
 .table table tr th:nth-child(2) {
   width: 600px;
 }
+
+.page_wrap{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+form{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+

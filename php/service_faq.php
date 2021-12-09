@@ -135,17 +135,17 @@
 
       <!-- main2 -->
       <form action="./service_faq.php" method="get">
-        <select name="option" id="select">
-          <option value="question">질문 </option>
+        <select name="option" id="select" style="width:100px;height:30px;">
+          <option value="question">질문</option>
           <option value="answer">질문 및 답변</option>
         </select>
-        <input type="text" id="search_str" name="search_str">
-        <input type="submit" value="검 색" id="submit" onsubmit="return false">
+        <input type="text" style="width:250px;height:30px;" id="search_str" name="search_str">
+        <input type="submit" style=" width:70px;height:30px; font-weight: bold;" value="검 색" id="submit" onsubmit="return false">
         <span id="error" style="color: red; font-size: 14px;"></span>
       </form>
 
       <!-- main3 -->
-      <div class="table">
+      <div class="table"> 
         <table>
           <tr>
             <th id="type">구 분</th>
