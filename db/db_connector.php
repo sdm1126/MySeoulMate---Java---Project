@@ -69,6 +69,7 @@ function get_paging($write_pages, $current_page, $total_page, $url) {
     // URL이 예를 들어, 'memo_login&page=123'이 있으면 'memo_login&page=' 으로 변경(공통 적용하기 위함)
     $url = preg_replace('/\&page=[0-9]*/', '', $url) . '&amp;page=';
 
+    // 0. 페이징 시작
     $str = '';
     // 1. 현재 페이지가 1페이지가 아니고, 2페이지 이상이라면 처음 가기를 등록한다.
     ($current_page > 1) ? ($str .= '<a href="' . $url . '1" class="arrow pprev"><<</a>' . PHP_EOL) : ''; // 'PHP_EOL'은 \n 이라는 뜻
