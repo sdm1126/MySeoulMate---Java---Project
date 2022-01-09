@@ -6,8 +6,8 @@ Android와 SQLite를 활용한 서울시 관광명소 Concierge App 제작
 
 ## 개발환경
 
-| OS | Windows 10 Home |
 | --- | --- |
+| OS | Windows 10 Home |
 | Language | Java 11.0.9 Android SDK |
 | Editor | Android Studio 11.0.10 |
 | DBMS | SQLite Expert Professional 5.4 |
