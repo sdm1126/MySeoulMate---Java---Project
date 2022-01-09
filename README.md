@@ -1,13 +1,3 @@
-
----
-layout: post
-title: "Notion으로 글 작성하고 Github io로 글 옮기기"
-subtitle: "[Tips]"
-date: 2020-03-02 17:00
-background: 
-tag: [Tips, Github io, Notion]
----
-
 # The Mirae Seoul
 
 ## 개 요
@@ -49,7 +39,7 @@ PHP와 MySQL을 활용한 중저가 비즈니스 호텔 웹사이트 제작
 
 ---
 
-![Untitled](The%20Mirae%20Seoul%20c7a910741b9e4892af2e758f415f52c8/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/The%20Mirae%20Seoul%20c7a910741b9e4892af2e758f415f52c8/Untitled.png)
 
 ### 메인
 
